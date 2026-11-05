@@ -4,269 +4,324 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Myheaven — Characters & Stories</title>
+<title>Myheaven</title>
 <style>
-:root{--bg:#0c0b10;--panel:#15131b;--line:#292530;--muted:#9b96a5;--purple:#b68cff;--white:#f6f3fa}
+:root{--bg:#0c0b10;--panel:#15131b;--line:#292530;--muted:#9993a2;--purple:#b68cff}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif}
+body{margin:0;background:var(--bg);color:#f6f3fa;font-family:Inter,Arial,sans-serif}
 button,input,textarea{font:inherit}
 button{cursor:pointer}
-header{height:72px;padding:0 5%;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:#100e15;position:sticky;top:0;z-index:5}
-.logo{font-size:25px;font-weight:800;letter-spacing:-1.2px}
+header{height:72px;padding:0 4%;background:#100e15;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:15px;position:sticky;top:0;z-index:5}
+.logo{font-size:25px;font-weight:800;letter-spacing:-1px;white-space:nowrap}
 .logo span{color:var(--purple)}
-nav{display:flex;gap:8px}
-nav button,.pill{border:0;background:transparent;color:var(--muted);padding:11px 17px;border-radius:10px}
-nav button.active{background:#30243f;color:#e3ccff}
-nav button:hover{color:white}
-.create{background:var(--purple);color:#160e21;border:0;border-radius:10px;padding:11px 16px;font-weight:700}
-main{max-width:1180px;margin:auto;padding:38px 25px 70px}
-.eyebrow{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:2px}
-h1{font-size:34px;letter-spacing:-1.2px;margin:10px 0}
-.sub{color:var(--muted);font-size:14px;line-height:1.7}
-.toolbar{display:flex;gap:12px;margin:26px 0;align-items:center;flex-wrap:wrap}
-.search{background:#17151d;border:1px solid var(--line);color:white;border-radius:12px;padding:13px 16px;flex:1;min-width:200px;outline:none}
-.filters{display:flex;gap:7px;flex-wrap:wrap}
-.filters button{background:#191720;border:1px solid var(--line);color:#aaa3b3;border-radius:30px;padding:9px 14px}
-.filters button.active{color:#e5d5ff;background:#30243f;border-color:#70558f}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;cursor:pointer;transition:.2s}
-.card:hover{transform:translateY(-4px);border-color:#71558c}
-.cover{width:100%;height:260px;object-fit:cover;display:block;background:linear-gradient(135deg,#41314e,#17151d)}
-.cardbody{padding:15px}
-.cardtop{display:flex;justify-content:space-between;gap:8px;align-items:center}
-.card h3{font-size:17px;margin:0}
-.age{color:#a9a1b2;font-size:12px}
-.role{font-size:12px;color:var(--purple);margin-top:5px}
-.description{font-size:13px;color:#aaa4b1;line-height:1.55;min-height:40px;margin:10px 0}
-.tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-size:10px;color:#b9a8ce;background:#282230;padding:5px 8px;border-radius:20px}
-.cardfoot{display:flex;justify-content:space-between;align-items:center;margin-top:15px;padding-top:12px;border-top:1px solid var(--line)}
-.cardfoot span{color:#85808d;font-size:11px}
-.cardfoot button{background:transparent;border:0;color:var(--purple);font-weight:700}
-.sectiontitle{display:flex;justify-content:space-between;align-items:center;margin:30px 0 16px}
+nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+nav button{border:0;background:transparent;color:#aaa;padding:11px 13px;border-radius:10px;font-size:13px}
+nav button.active,nav button:hover{background:#30243f;color:#e5d5ff}
+.create,.primary{background:var(--purple);color:#160e21;border:0;border-radius:10px;padding:12px 16px;font-weight:700}
+main{max-width:1200px;margin:auto;padding:36px 24px 65px}
+.view{display:none}.view.active{display:block}
+.eyebrow{font-size:11px;color:var(--purple);letter-spacing:2px;font-weight:700}
+h1{font-size:34px;letter-spacing:-1px;margin:11px 0}
+.sub{font-size:14px;color:var(--muted);line-height:1.7}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin:25px 0}
+.search,.field{background:#17151d;border:1px solid var(--line);color:white;padding:13px;border-radius:10px;outline:none}
+.search{flex:1;min-width:180px}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{border:1px solid var(--line);background:#191720;color:#aaa;padding:9px 13px;border-radius:25px}
+.filters button.active{background:#30243f;color:#e5d5ff}
+.sectiontitle{display:flex;justify-content:space-between;align-items:center;margin:28px 0 17px}
 .sectiontitle h2{font-size:20px;margin:0}
-.empty{text-align:center;padding:65px 15px;color:var(--muted)}
-.view{display:none}
-.view.active{display:block}
-.back{background:transparent;border:0;color:var(--purple);padding:0;margin-bottom:25px}
-.profile{display:grid;grid-template-columns:360px 1fr;gap:35px;align-items:start}
-.profile img{width:100%;height:480px;object-fit:cover;border-radius:17px;background:#29202f}
-.profile h1{font-size:38px}
-.profilebox{background:var(--panel);padding:24px;border:1px solid var(--line);border-radius:15px;margin-top:20px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-3px);border-color:#7959a0}
+.cover{height:270px;width:100%;object-fit:cover;display:block;background:#29202f}
+.cardbody{padding:15px}
+.cardtop{display:flex;justify-content:space-between;gap:8px}
+.card h3{font-size:17px;margin:0}
+.role{font-size:12px;color:var(--purple);margin-top:6px}
+.description{font-size:13px;color:#aaa4b1;line-height:1.55;min-height:42px;margin:11px 0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:10px;color:#c7b4df;background:#282230;padding:5px 8px;border-radius:20px}
+.cardfoot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;margin-top:14px}
+.cardfoot span{font-size:11px;color:#85808d}
+.cardfoot button{border:0;background:transparent;color:var(--purple);font-weight:700}
+.back{background:transparent;border:0;color:var(--purple);margin-bottom:22px;padding:0}
+.profile{display:grid;grid-template-columns:360px 1fr;gap:32px}
+.profile img{width:100%;height:480px;object-fit:cover;border-radius:16px;background:#29202f}
+.profilebox{background:var(--panel);border:1px solid var(--line);padding:22px;border-radius:15px;margin:20px 0}
 .profilebox h3{margin-top:0}
-.primary{background:var(--purple);border:0;color:#160e21;padding:13px 22px;border-radius:10px;font-weight:800}
-.chatbox{max-width:760px;margin:auto;height:calc(100vh - 160px);min-height:450px;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.chathead{padding:17px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.situation{background:linear-gradient(145deg,#292039,#17141d);border:1px solid var(--line);padding:22px;border-radius:15px;min-height:190px;display:flex;flex-direction:column;justify-content:space-between}
+.situation h3{margin:12px 0}
+.situation p{font-size:13px;color:#aaa;line-height:1.6}
+.chatlayout{display:grid;grid-template-columns:270px 1fr;gap:18px;min-height:610px}
+.chatlist,.chatbox{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden}
+.chatlist{padding:15px}
+.chatlisthead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.chatlisthead h3{font-size:15px}
+.chatitem{padding:12px;border-radius:10px;background:#1d1a23;margin-bottom:7px;cursor:pointer;display:flex;justify-content:space-between;gap:5px;align-items:center}
+.chatitem.active{background:#30243f}
+.chatitem strong{font-size:13px}
+.chatitem small{display:block;color:#999;font-size:11px;margin-top:4px}
+.chatitem button{border:0;background:transparent;color:#bba2dc;padding:5px}
+.chatbox{display:flex;flex-direction:column;min-height:610px}
+.chathead{padding:16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
 .chathead img{width:42px;height:42px;border-radius:50%;object-fit:cover}
-.chatmessages{flex:1;padding:20px;overflow:auto;display:flex;flex-direction:column;gap:13px}
-.bubble{max-width:78%;padding:13px 16px;border-radius:15px;background:#26212e;line-height:1.6;font-size:14px;white-space:pre-wrap}
+.chathead .sub{font-size:12px}
+.chatmessages{flex:1;padding:20px;overflow:auto;display:flex;flex-direction:column;gap:12px;min-height:300px}
+.bubble{max-width:78%;padding:12px 15px;border-radius:14px;background:#26212e;font-size:14px;line-height:1.6;white-space:pre-wrap}
 .bubble.me{align-self:flex-end;background:#49345f}
-.chatinput{border-top:1px solid var(--line);padding:14px;display:flex;gap:10px}
-.chatinput input{flex:1;min-width:0;background:#201d26;border:1px solid var(--line);color:white;border-radius:11px;padding:13px;outline:none}
-.situation{background:linear-gradient(145deg,#292039,#17141d);border:1px solid var(--line);padding:23px;border-radius:15px;min-height:180px;display:flex;flex-direction:column;justify-content:space-between}
-.situation h3{margin:10px 0}
-.situation p{color:#aaa4b1;font-size:13px;line-height:1.6}
-.modal{display:none;position:fixed;inset:0;background:#000b;z-index:10;align-items:center;justify-content:center;padding:18px}
+.chatinput{border-top:1px solid var(--line);padding:14px;display:flex;gap:8px}
+.chatinput input{flex:1;min-width:0;background:#201d26;border:1px solid var(--line);color:white;border-radius:10px;padding:13px;outline:none}
+.chattools{padding:9px 14px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end}
+.secondary{background:#292530;color:#eee;border:0;border-radius:8px;padding:9px 12px}
+.empty{text-align:center;padding:60px 15px;color:var(--muted)}
+.modal{display:none;position:fixed;inset:0;background:#000c;z-index:10;align-items:center;justify-content:center;padding:16px}
 .modal.show{display:flex}
-.modalbox{background:#17141d;border:1px solid var(--line);border-radius:17px;padding:25px;width:100%;max-width:490px;max-height:90vh;overflow:auto}
+.modalbox{background:#17141d;border:1px solid var(--line);border-radius:16px;padding:24px;width:100%;max-width:490px;max-height:90vh;overflow:auto}
 .modalbox h2{margin-top:0}
-.field{width:100%;margin:8px 0 15px;padding:12px;border-radius:9px;background:#0f0e13;border:1px solid #38323f;color:white;outline:none}
+.field{display:block;width:100%;margin:8px 0 15px}
 label{font-size:12px;color:#aaa}
-.actions{display:flex;gap:10px;justify-content:flex-end}
-.secondary{background:#292530;color:#eee;border:0;padding:12px 17px;border-radius:9px}
-@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.profile{grid-template-columns:1fr}.profile img{height:350px}}
+.actions{display:flex;gap:9px;justify-content:flex-end}
+.imagebox{background:var(--panel);padding:25px;border:1px solid var(--line);border-radius:15px;max-width:650px}
+.imagebox input{width:100%;margin:15px 0}
+.notice{font-size:12px;color:#8d8497;margin-top:15px}
+@media(max-width:800px){
+.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.profile{grid-template-columns:1fr}
+.profile img{height:350px}
+.chatlayout{grid-template-columns:1fr}
+.chatlist{max-height:220px;overflow:auto}
+}
 @media(max-width:520px){
-header{height:62px;padding:0 13px}.logo{font-size:20px}
-nav{gap:0}nav button{padding:9px 10px;font-size:12px}
-header .create{padding:9px 10px;font-size:11px}
-main{padding:27px 14px 50px}h1{font-size:28px}
-.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.cover{height:190px}.cardbody{padding:11px}
-.card h3{font-size:14px}.description{font-size:11px;min-height:55px}
-.tag{font-size:9px}.cardfoot button{font-size:11px}
+header{height:auto;min-height:65px;padding:10px;flex-wrap:wrap}
+.logo{font-size:20px}
+nav{order:3;width:100%;justify-content:space-between}
+nav button{padding:9px 8px;font-size:11px}
+.create{padding:9px}
+main{padding:26px 13px}
+h1{font-size:28px}
+.grid{gap:10px}
+.cover{height:190px}
+.cardbody{padding:11px}
+.card h3{font-size:14px}
+.description{font-size:11px;min-height:56px}
+.tag{font-size:9px}
+.profile img{height:300px}
 }
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">My<span>heaven</span></div>
-  <nav>
-    <button id="charactersTab" class="active" onclick="showPage('characters')">Characters</button>
-    <button id="situationsTab" onclick="showPage('situations')">Situations</button>
-  </nav>
-  <button class="create" onclick="openCreate()">＋ Create</button>
+<div class="logo">My<span>heaven</span></div>
+<nav>
+<button id="charactersTab" class="active" onclick="showPage('characters')">Characters</button>
+<button id="situationsTab" onclick="showPage('situations')">Situations</button>
+<button id="chatsTab" onclick="showPage('chats')">Chats</button>
+<button id="imagesTab" onclick="showPage('images')">Images</button>
+</nav>
+<button class="create" onclick="openCreate()">＋ Create</button>
 </header>
 
 <main>
-  <section id="charactersPage" class="view active">
-    <div class="eyebrow">YOUR PRIVATE UNIVERSE</div>
-    <h1>Kisse baat karni hai?</h1>
-    <p class="sub">Meet interesting personalities. Start a story. See where the conversation takes you.</p>
-    <div class="toolbar">
-      <input id="search" class="search" placeholder="Search characters..." oninput="renderCharacters()">
-      <div class="filters">
-        <button class="active" onclick="setFilter('All',this)">All</button>
-        <button onclick="setFilter('Everyday',this)">Everyday</button>
-        <button onclick="setFilter('Romance',this)">Romance</button>
-        <button onclick="setFilter('Fantasy',this)">Fantasy</button>
-        <button onclick="setFilter('My characters',this)">Mine</button>
-      </div>
-    </div>
-    <div class="sectiontitle">
-      <h2>Discover characters</h2>
-      <span class="sub" id="count"></span>
-    </div>
-    <div class="grid" id="characterGrid"></div>
-  </section>
+<section id="charactersPage" class="view active">
+<div class="eyebrow">YOUR PRIVATE UNIVERSE</div>
+<h1>Meet someone interesting.</h1>
+<p class="sub">Indian women. Different personalities. Stories waiting to happen.</p>
+<div class="toolbar">
+<input id="search" class="search" placeholder="Search characters..." oninput="renderCharacters()">
+<div class="filters">
+<button class="active" onclick="setFilter('All',this)">All</button>
+<button onclick="setFilter('Everyday',this)">Everyday</button>
+<button onclick="setFilter('Romance',this)">Romance</button>
+<button onclick="setFilter('Fantasy',this)">Fantasy</button>
+<button onclick="setFilter('Mine',this)">My characters</button>
+</div>
+</div>
+<div class="sectiontitle"><h2>Discover characters</h2><span class="sub" id="count"></span></div>
+<div class="grid" id="characterGrid"></div>
+</section>
 
-  <section id="situationsPage" class="view">
-    <div class="eyebrow">CHOOSE YOUR STORY</div>
-    <h1>Every story starts somewhere.</h1>
-    <p class="sub">Pick a situation and step into a new scene.</p>
-    <div class="sectiontitle"><h2>Explore situations</h2></div>
-    <div class="grid" id="situationGrid">
-      <div class="situation"><div><span class="eyebrow">01 · EVERYDAY</span><h3>A chance encounter</h3><p>You keep running into the same person at your favourite café. Today, they finally start a conversation.</p></div><button class="primary" onclick="alert('Situation stories will be connected next.')">Explore scene ↗</button></div>
-      <div class="situation"><div><span class="eyebrow">02 · ROMANCE</span><h3>The late-night message</h3><p>A message arrives at 1 AM from someone you haven't spoken to in months.</p></div><button class="primary" onclick="alert('Situation stories will be connected next.')">Explore scene ↗</button></div>
-      <div class="situation"><div><span class="eyebrow">03 · MYSTERY</span><h3>The unexpected visitor</h3><p>Someone knocks on your door with a story that changes your evening.</p></div><button class="primary" onclick="alert('Situation stories will be connected next.')">Explore scene ↗</button></div>
-    </div>
-  </section>
+<section id="situationsPage" class="view">
+<div class="eyebrow">CHOOSE YOUR STORY</div>
+<h1>Every story starts somewhere.</h1>
+<p class="sub">Pick a situation and step into a new scene.</p>
+<div class="sectiontitle"><h2>Explore situations</h2></div>
+<div class="grid">
+<div class="situation"><div><span class="eyebrow">DELHI · EVERYDAY</span><h3>A chance encounter</h3><p>You keep running into the same woman at your favourite café. Today, she finally starts a conversation.</p></div><button class="primary" onclick="alert('Choose a character to start this story. Situation prompts will be connected next.')">Explore scene ↗</button></div>
+<div class="situation"><div><span class="eyebrow">MUMBAI · ROMANCE</span><h3>The late-night message</h3><p>A message arrives at 1 AM from someone you haven't spoken to in months.</p></div><button class="primary" onclick="alert('Choose a character to start this story. Situation prompts will be connected next.')">Explore scene ↗</button></div>
+<div class="situation"><div><span class="eyebrow">JAIPUR · MYSTERY</span><h3>The unexpected visitor</h3><p>A traveller arrives at your door with a story that changes your evening.</p></div><button class="primary" onclick="alert('Choose a character to start this story. Situation prompts will be connected next.')">Explore scene ↗</button></div>
+</div>
+</section>
 
-  <section id="profilePage" class="view">
-    <button class="back" onclick="showPage('characters')">← Back to characters</button>
-    <div class="profile">
-      <img id="profileImage" alt="Character portrait">
-      <div>
-        <div class="eyebrow">CHARACTER PROFILE</div>
-        <h1 id="profileName"></h1>
-        <div class="sub" id="profileMeta"></div>
-        <p class="sub" id="profileDescription"></p>
-        <div class="profilebox">
-          <h3>About this character</h3>
-          <p class="sub" id="profileStory"></p>
-          <div class="tags" id="profileTags"></div>
-        </div>
-        <br>
-        <button class="primary" onclick="startChat()">💬 Chat karo</button>
-      </div>
-    </div>
-  </section>
+<section id="profilePage" class="view">
+<button class="back" onclick="showPage('characters')">← Back to characters</button>
+<div class="profile">
+<img id="profileImage" alt="Character portrait">
+<div>
+<div class="eyebrow">CHARACTER PROFILE</div>
+<h1 id="profileName"></h1>
+<div class="sub" id="profileMeta"></div>
+<p class="sub" id="profileDescription"></p>
+<div class="profilebox"><h3>About her</h3><p class="sub" id="profileStory"></p><div class="tags" id="profileTags"></div></div>
+<button class="primary" onclick="startChat()">💬 Chat with her</button>
+</div>
+</div>
+</section>
 
-  <section id="chatPage" class="view">
-    <button class="back" onclick="showProfile()">← Back to profile</button>
-    <div class="chatbox">
-      <div class="chathead">
-        <img id="chatImage" alt="">
-        <div><strong id="chatName"></strong><div class="sub">✦ Here for a conversation</div></div>
-      </div>
-      <div class="chatmessages" id="messages">
-        <div class="bubble">Hey! It's nice to see you. What's on your mind?</div>
-      </div>
-      <div class="chatinput">
-        <input id="messageInput" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()">
-        <button class="primary" onclick="sendMessage()">Send ↗</button>
-      </div>
-    </div>
-  </section>
+<section id="chatsPage" class="view">
+<div class="eyebrow">YOUR CONVERSATIONS</div>
+<h1>Your chats.</h1>
+<p class="sub">Pick up where you left off, or start a new conversation.</p>
+<div class="chatlayout">
+<aside class="chatlist">
+<div class="chatlisthead"><h3>Recent chats</h3><button class="primary" onclick="showPage('characters')">＋ New</button></div>
+<div id="chatList"></div>
+</aside>
+<div class="chatbox">
+<div class="chathead"><img id="chatImage" alt=""><div><strong id="chatName">Choose a conversation</strong><div class="sub" id="chatSub">Your conversations will appear here</div></div></div>
+<div class="chatmessages" id="messages"><div class="empty">Choose a chat on the left, or start a new one from Characters.</div></div>
+<div class="chatinput"><input id="messageInput" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()"><button class="primary" onclick="sendMessage()">Send ↗</button></div>
+<div class="chattools"><button class="secondary" onclick="renameChat()">Rename chat</button><button class="secondary" onclick="clearChat()">Clear messages</button><button class="secondary" onclick="deleteChat()">Delete chat</button></div>
+</div>
+</div>
+<p class="notice">AI replies will appear here after the Venice API is connected. Your messages are currently saved in this browser.</p>
+</section>
+
+<section id="imagesPage" class="view">
+<div class="eyebrow">IMAGE STUDIO</div>
+<h1>Bring your imagination to life.</h1>
+<div class="imagebox">
+<p class="sub">Describe the image you want to create. Venice image generation will be connected here.</p>
+<textarea class="field" rows="4" id="imagePrompt" placeholder="Describe your scene, character, style and setting..."></textarea>
+<button class="primary" onclick="alert('Image generation will be connected when Venice API is set up.')">Generate image ↗</button>
+</div>
+</section>
 </main>
 
 <div class="modal" id="createModal">
-  <div class="modalbox">
-    <h2>Create your character</h2>
-    <label>Name</label><input class="field" id="newName" placeholder="Give your character a name">
-    <label>Age (18+)</label><input class="field" id="newAge" type="number" min="18" placeholder="Age">
-    <label>Character role</label><input class="field" id="newRole" placeholder="e.g. Artist, neighbour, traveller">
-    <label>Personality</label><input class="field" id="newPersonality" placeholder="e.g. witty, confident, mysterious">
-    <label>About / backstory</label><textarea class="field" id="newStory" rows="4" placeholder="Describe your character and their story"></textarea>
-    <label>Portrait image URL (optional)</label><input class="field" id="newImage" placeholder="Paste an image URL">
-    <div class="actions">
-      <button class="secondary" onclick="closeCreate()">Cancel</button>
-      <button class="primary" onclick="saveCharacter()">Create character</button>
-    </div>
-  </div>
+<div class="modalbox">
+<h2>Create an Indian woman character</h2>
+<label>Name</label><input class="field" id="newName" placeholder="Character name">
+<label>Age (18+)</label><input class="field" id="newAge" type="number" min="18" placeholder="Age">
+<label>City in India</label><input class="field" id="newCity" placeholder="e.g. Chandigarh, Mumbai, Delhi">
+<label>Role</label><input class="field" id="newRole" placeholder="e.g. Artist, writer, neighbour">
+<label>Personality</label><input class="field" id="newPersonality" placeholder="e.g. witty, confident, mysterious">
+<label>Backstory</label><textarea class="field" id="newStory" rows="4" placeholder="Describe her personality and story"></textarea>
+<label>Portrait image URL (optional)</label><input class="field" id="newImage" placeholder="Paste an image URL">
+<div class="actions"><button class="secondary" onclick="closeCreate()">Cancel</button><button class="primary" onclick="saveCharacter()">Create character</button></div>
+</div>
 </div>
 
 <script>
 const stock=[
-{name:"Meera",age:26,role:"The girl next door",type:"Everyday",personality:"calm · warm · thoughtful",description:"A gentle soul you often meet on your evening walks.",story:"Meera teaches at a nearby school. She is observant, warm and has a way of making ordinary evenings feel special.",image:"https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700",tags:["Calm","Warm","Thoughtful"]},
-{name:"Riya",age:24,role:"College friend",type:"Romance",personality:"funny · spontaneous · loyal",description:"An old college friend with a talent for getting you into stories.",story:"You knew Riya from college. After months apart, a random message brings the two of you back into each other's lives.",image:"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700",tags:["Funny","Spontaneous","Loyal"]},
-{name:"Aarav",age:28,role:"The mysterious stranger",type:"Everyday",personality:"quiet · clever · observant",description:"A stranger at the café who seems to know more than he lets on.",story:"Aarav visits the same café every Sunday. One rainy afternoon, he finally takes the seat across from you.",image:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=700",tags:["Quiet","Clever","Mysterious"]},
-{name:"Kiara",age:25,role:"The artist",type:"Romance",personality:"creative · bold · playful",description:"A photographer who sees the world a little differently.",story:"Kiara is a freelance photographer you meet at a small gallery opening. She has a hundred stories and a hundred questions.",image:"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=700",tags:["Creative","Bold","Playful"]},
-{name:"Elena",age:27,role:"Fantasy traveller",type:"Fantasy",personality:"brave · curious · witty",description:"A traveller from a world that exists just beyond yours.",story:"Elena arrives in your city carrying an old map and a secret she has been protecting for years.",image:"https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=700",tags:["Brave","Curious","Fantasy"]},
-{name:"Kabir",age:30,role:"The musician",type:"Everyday",personality:"charming · artistic · thoughtful",description:"A musician who always has one more song to play.",story:"Kabir plays guitar at a neighbourhood bar. You have heard him play several times, but tonight he asks you to stay after the show.",image:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=700",tags:["Music","Charming","Thoughtful"]}
+{id:'aanya',name:'Aanya',age:25,city:'New Delhi',role:'The creative neighbour',type:'Everyday',personality:'witty · warm · observant',description:'An illustrator with a sharp sense of humour and an eye for little details.',story:'Aanya lives in South Delhi and works as a freelance illustrator. She loves old Hindi cinema, rainy evenings and conversations that go on longer than planned.',image:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800',tags:['Creative','Witty','Warm']},
+{id:'meher',name:'Meher',age:24,city:'Amritsar',role:'The musician',type:'Romance',personality:'playful · artistic · independent',description:'A singer-songwriter who turns ordinary moments into stories.',story:'Meher grew up in Amritsar and now performs at intimate music venues. She has a soft spot for old Punjabi songs, poetry and people who can make her laugh.',image:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800',tags:['Music','Poetry','Playful']},
+{id:'kavya',name:'Kavya',age:27,city:'Mumbai',role:'The filmmaker',type:'Everyday',personality:'ambitious · bold · thoughtful',description:'A documentary filmmaker who is always chasing an interesting story.',story:'Kavya works in independent films in Mumbai. She is passionate about cinema, late-night drives and conversations about everything from art to ambition.',image:'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=800',tags:['Cinema','Bold','Ambitious']},
+{id:'naina',name:'Naina',age:26,city:'Kolkata',role:'The journalist',type:'Mystery',personality:'curious · clever · perceptive',description:'A journalist who notices the details other people miss.',story:'Naina writes features for a Kolkata magazine. She collects stories, loves old bookshops and is rarely satisfied with the first answer.',image:'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=800',tags:['Curious','Clever','Books']},
+{id:'isha',name:'Isha',age:25,city:'Bengaluru',role:'The startup founder',type:'Everyday',personality:'smart · sarcastic · driven',description:'A founder balancing big ideas with very little sleep.',story:'Isha is building a small tech startup in Bengaluru. She loves filter coffee, indie music and people who can keep up with her quick wit.',image:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800',tags:['Tech','Sarcastic','Driven']},
+{id:'zoya',name:'Zoya',age:24,city:'Hyderabad',role:'The culinary artist',type:'Romance',personality:'expressive · funny · kind',description:'A food stylist with a love for flavours, films and spontaneous plans.',story:'Zoya is a food stylist in Hyderabad. Her kitchen is always busy, her playlists are eclectic and she believes most problems improve with good biryani.',image:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800',tags:['Food','Funny','Artistic']}
 ];
-let custom=JSON.parse(localStorage.getItem('myheaven_characters')||'[]');
-let selected=null,filter='All',currentMessages=[];
+let custom=JSON.parse(localStorage.getItem('mh_custom')||'[]');
+let conversations=JSON.parse(localStorage.getItem('mh_conversations')||'[]');
+let selected=null,filter='All';
 
+function save(){localStorage.setItem('mh_custom',JSON.stringify(custom));localStorage.setItem('mh_conversations',JSON.stringify(conversations))}
 function allPeople(){return [...stock,...custom]}
-function safe(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function renderCharacters(){
-let q=document.getElementById('search').value.toLowerCase();
-let people=allPeople().filter(p=>(filter==='All'||(filter==='My characters'?p.mine:p.type===filter))&&(p.name+' '+p.role+' '+p.description+' '+p.personality).toLowerCase().includes(q));
-document.getElementById('count').textContent=people.length+' characters';
-document.getElementById('characterGrid').innerHTML=people.map((p)=>`
-<div class="card" onclick="openProfile('${safe(p.id||p.name)}')">
-<img class="cover" src="${safe(p.image||'')}" alt="${safe(p.name)}" onerror="this.style.opacity='.15'">
-<div class="cardbody">
-<div class="cardtop"><h3>${safe(p.name)}</h3><span class="age">${safe(p.age)}</span></div>
-<div class="role">${safe(p.role)}</div>
-<div class="description">${safe(p.description)}</div>
-<div class="tags">${(p.tags||[]).slice(0,3).map(t=>'<span class="tag">'+safe(t)+'</span>').join('')}</div>
-<div class="cardfoot"><span>${p.mine?'Your character':'Fictional character'}</span><button>See profile ↗</button></div>
-</div></div>`).join('');
-}
-function setFilter(value,btn){
-filter=value;document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderCharacters();
-}
+function person(id){return allPeople().find(p=>p.id===id)}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function showPage(page){
 document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
 document.getElementById(page+'Page').classList.add('active');
-document.getElementById('charactersTab').classList.toggle('active',page==='characters');
-document.getElementById('situationsTab').classList.toggle('active',page==='situations');
+['characters','situations','chats','images'].forEach(p=>document.getElementById(p+'Tab').classList.toggle('active',p===page));
+if(page==='chats'){renderChatList();renderMessages()}
 }
-function getPerson(key){return allPeople().find(p=>p.id===key||p.name===key)}
-function openProfile(key){
-selected=getPerson(key);if(!selected)return;
+function renderCharacters(){
+let q=document.getElementById('search').value.toLowerCase();
+let people=allPeople().filter(p=>(filter==='All'||(filter==='Mine'?p.mine:p.type===filter))&&(p.name+' '+p.city+' '+p.role+' '+p.description).toLowerCase().includes(q));
+document.getElementById('count').textContent=people.length+' characters';
+document.getElementById('characterGrid').innerHTML=people.map(p=>`
+<div class="card" onclick="openProfile('${esc(p.id)}')">
+<img class="cover" src="${esc(p.image)}" alt="${esc(p.name)}" onerror="this.style.opacity='.15'">
+<div class="cardbody"><div class="cardtop"><h3>${esc(p.name)}</h3><span class="sub">${p.age}</span></div>
+<div class="role">${esc(p.role)} · ${esc(p.city)}</div><div class="description">${esc(p.description)}</div>
+<div class="tags">${(p.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join('')}</div>
+<div class="cardfoot"><span>${p.mine?'Your character':'India · Fictional character'}</span><button>View profile ↗</button></div></div></div>`).join('');
+}
+function setFilter(value,button){filter=value;document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));button.classList.add('active');renderCharacters()}
+function openProfile(id){
+selected=person(id);if(!selected)return;
 document.getElementById('profileImage').src=selected.image||'';
 document.getElementById('profileName').textContent=selected.name;
-document.getElementById('profileMeta').textContent=selected.age+' · '+selected.role;
+document.getElementById('profileMeta').textContent=selected.age+' · '+selected.role+' · '+selected.city+', India';
 document.getElementById('profileDescription').textContent=selected.description;
 document.getElementById('profileStory').textContent=selected.story;
-document.getElementById('profileTags').innerHTML=(selected.tags||[]).map(t=>'<span class="tag">'+safe(t)+'</span>').join('');
+document.getElementById('profileTags').innerHTML=(selected.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join('');
 showPage('profile');
 }
-function showProfile(){if(selected)openProfile(selected.id||selected.name)}
 function startChat(){
 if(!selected)return;
-document.getElementById('chatImage').src=selected.image||'';
-document.getElementById('chatName').textContent=selected.name;
-document.getElementById('messages').innerHTML='';
-addBubble(selected.name+': '+(selected.greeting||'Hey! I was hoping I would see you. How has your day been?'),false);
-showPage('chat');
+let chat={id:'chat-'+Date.now(),characterId:selected.id,title:selected.name,messages:[]};
+conversations.unshift(chat);save();showPage('chats');selectChat(chat.id);
 }
-function addBubble(text,me){
-let b=document.createElement('div');b.className='bubble'+(me?' me':'');b.textContent=text;
-document.getElementById('messages').appendChild(b);
-document.getElementById('messages').scrollTop=999999;
+function currentChat(){return conversations.find(c=>c.id===selectedChatId)}
+let selectedChatId=null;
+function renderChatList(){
+let box=document.getElementById('chatList');
+if(!conversations.length){box.innerHTML='<div class="empty">No chats yet.<br>Open a character and start chatting.</div>';return}
+box.innerHTML=conversations.map(c=>{
+let p=person(c.characterId);
+return `<div class="chatitem ${c.id===selectedChatId?'active':''}" onclick="selectChat('${c.id}')">
+<div><strong>${esc(c.title)}</strong><small>${esc(p?p.city:'India')} · ${(c.messages||[]).length} messages</small></div>
+<button title="Chat actions" onclick="event.stopPropagation();chatActions('${c.id}')">⋯</button></div>`;
+}).join('');
+}
+function selectChat(id){selectedChatId=id;renderChatList();renderMessages()}
+function renderMessages(){
+let c=currentChat(),p=c&&person(c.characterId);
+document.getElementById('chatName').textContent=c?c.title:'Choose a conversation';
+document.getElementById('chatSub').textContent=p?p.city+', India · Character chat':'Your conversations will appear here';
+document.getElementById('chatImage').src=p?p.image:'';
+let box=document.getElementById('messages');
+if(!c){box.innerHTML='<div class="empty">Choose a chat on the left, or start one from Characters.</div>';return}
+box.innerHTML='';
+if(!c.messages.length){let b=document.createElement('div');b.className='bubble';b.textContent='Start the conversation with '+p.name+'. Venice AI will power her replies once connected.';box.appendChild(b)}
+(c.messages||[]).forEach(m=>{let b=document.createElement('div');b.className='bubble'+(m.role==='user'?' me':'');b.textContent=m.text;box.appendChild(b)});
+box.scrollTop=box.scrollHeight;
 }
 function sendMessage(){
-let input=document.getElementById('messageInput'),text=input.value.trim();if(!text)return;
-addBubble(text,true);input.value='';
-addBubble('Venice AI will be connected here next. Your character profile is saved. ✦',false);
+let c=currentChat(),input=document.getElementById('messageInput'),value=input.value.trim();
+if(!c){alert('Open a character chat first.');return}
+if(!value)return;
+c.messages.push({role:'user',text:value});
+c.messages.push({role:'assistant',text:'Your message is saved. Venice AI will generate her reply after the API is connected.'});
+input.value='';save();renderMessages();renderChatList();
 }
+function chatActions(id){
+let c=conversations.find(x=>x.id===id);if(!c)return;
+let action=prompt('Type: rename, clear, or delete');
+if(!action)return;
+action=action.toLowerCase().trim();
+if(action==='rename'){let title=prompt('New chat name',c.title);if(title)c.title=title}
+else if(action==='clear'){if(confirm('Clear all messages in this chat?'))c.messages=[]}
+else if(action==='delete'){if(confirm('Delete this chat?')){conversations=conversations.filter(x=>x.id!==id);if(selectedChatId===id)selectedChatId=null}}
+save();renderChatList();renderMessages();
+}
+function renameChat(){let c=currentChat();if(!c){alert('Choose a chat first.');return}let t=prompt('Rename conversation',c.title);if(t){c.title=t;save();renderChatList();renderMessages()}}
+function clearChat(){let c=currentChat();if(!c){alert('Choose a chat first.');return}if(confirm('Clear all messages?')){c.messages=[];save();renderMessages();renderChatList()}}
+function deleteChat(){let c=currentChat();if(!c){alert('Choose a chat first.');return}if(confirm('Delete this conversation?')){conversations=conversations.filter(x=>x.id!==c.id);selectedChatId=null;save();renderChatList();renderMessages()}}
 function openCreate(){document.getElementById('createModal').classList.add('show')}
 function closeCreate(){document.getElementById('createModal').classList.remove('show')}
 function saveCharacter(){
-let name=document.getElementById('newName').value.trim(),age=Number(document.getElementById('newAge').value);
-if(!name||age<18){alert('Please enter a name and an age of 18 or above.');return}
-let role=document.getElementById('newRole').value.trim()||'Your character';
-let personality=document.getElementById('newPersonality').value.trim()||'Unique personality';
+let name=document.getElementById('newName').value.trim();
+let age=Number(document.getElementById('newAge').value);
+let city=document.getElementById('newCity').value.trim();
+if(!name||age<18||!city){alert('Enter a name, age 18 or above, and an Indian city.');return}
+let personality=document.getElementById('newPersonality').value.trim()||'Warm and interesting';
 let tags=personality.split(',').map(x=>x.trim()).filter(Boolean);
-let p={id:'custom-'+Date.now(),name,age,role,type:'Everyday',personality,description:role+' · '+personality,story:document.getElementById('newStory').value.trim(),image:document.getElementById('newImage').value.trim()||'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700',tags,mine:true};
-custom.push(p);localStorage.setItem('myheaven_characters',JSON.stringify(custom));
-['newName','newAge','newRole','newPersonality','newStory','newImage'].forEach(id=>document.getElementById(id).value='');
-closeCreate();filter='My characters';document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.textContent==='Mine'));renderCharacters();showPage('characters');
+custom.push({id:'custom-'+Date.now(),name,age,city:city+', India',role:document.getElementById('newRole').value.trim()||'Your character',type:'Everyday',personality,description:personality,story:document.getElementById('newStory').value.trim(),image:document.getElementById('newImage').value.trim()||'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=800',tags,mine:true});
+save();closeCreate();['newName','newAge','newCity','newRole','newPersonality','newStory','newImage'].forEach(id=>document.getElementById(id).value='');filter='Mine';document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.textContent==='My characters'));renderCharacters();showPage('characters');
 }
-renderCharacters();
+renderCharacters();renderChatList();
 </script>
 </body>
 </html>
