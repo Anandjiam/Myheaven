@@ -51,7 +51,7 @@ module.exports = async function handler(req, res) {
       return sendError(res, response.status === 402 ? 402 : 502, String(providerMessage).slice(0, 400));
     }
     const choice = data.choices?.[0];
-    const content = choice?.message?.content ?? choice?.text ?? data.output_text ?? data.response;
+    const content = data.completionText ?? choice?.message?.content ?? choice?.text ?? data.output_text ?? data.response;
     const reply = Array.isArray(content) ? content.map(x => typeof x === 'string' ? x : (x.text || x.content || '')).join('') : content;
     if (typeof reply === 'string' && reply.trim()) return res.status(200).json({ reply: reply.trim() });
     // Keep diagnostics useful without exposing API keys or request headers.
