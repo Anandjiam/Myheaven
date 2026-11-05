@@ -50,10 +50,13 @@ module.exports = async function handler(req, res) {
       const providerMessage = data.error?.message || data.error || `AgentRouter returned ${response.status}`;
       return sendError(res, response.status === 402 ? 402 : 502, String(providerMessage).slice(0, 400));
     }
-    const content = data.choices?.[0]?.message?.content;
-    const reply = Array.isArray(content) ? content.map(x => x.text || '').join('') : content;
-    if (!reply) return sendError(res, 502, 'AgentRouter returned an empty reply.');
-    return res.status(200).json({ reply });
+    const choice = data.choices?.[0];
+    const content = choice?.message?.content ?? choice?.text ?? data.output_text ?? data.response;
+    const reply = Array.isArray(content) ? content.map(x => typeof x === 'string' ? x : (x.text || x.content || '')).join('') : content;
+    if (typeof reply === 'string' && reply.trim()) return res.status(200).json({ reply: reply.trim() });
+    // Keep diagnostics useful without exposing API keys or request headers.
+    const shape = Object.keys(data || {}).join(', ') || raw.slice(0, 500) || '(empty body)';
+    return sendError(res, 502, `AgentRouter response had no text. HTTP ${response.status}; fields: ${shape}`);
   } catch (error) {
     return sendError(res, 500, error.message || 'Unexpected chat error.');
   }
