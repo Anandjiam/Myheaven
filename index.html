@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Myheaven</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0b0e;color:#eee;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.app{display:flex;height:100vh;height:100dvh}
+.sidebar{width:260px;background:#111115;border-right:1px solid #26242b;padding:20px;display:flex;flex-direction:column;gap:16px}
+.brand{font-size:24px;font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.brand span{color:#b58aff}
+.nav{display:flex;gap:8px}
+.nav button{flex:1;background:#1c1a22;color:#aaa;border:0;padding:11px;border-radius:10px}
+.nav button.active{background:#30243f;color:#d8baff}
+.label{font-size:11px;color:#777;letter-spacing:1.5px;margin-top:12px}
+.character{padding:12px;border-radius:12px;background:#1b1920;color:#eee;cursor:pointer;border:1px solid transparent}
+.character.active{border-color:#7651a9;background:#27202f}
+.avatar{display:inline-flex;width:35px;height:35px;border-radius:50%;background:#49345c;align-items:center;justify-content:center;margin-right:10px}
+.character small{display:block;color:#888;margin-left:45px;margin-top:-8px}
+.add{background:transparent;color:#bba1df;border:1px dashed #49404f;padding:12px;border-radius:10px}
+.profile{margin-top:auto;color:#777;font-size:13px}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.top{padding:20px 25px;border-bottom:1px solid #252329;display:flex;align-items:center;justify-content:space-between}
+.top h2{font-size:17px;margin:0}
+.status{color:#9b82bb;font-size:12px}
+.chat{flex:1;overflow:auto;padding:25px;display:flex;flex-direction:column;gap:18px}
+.welcome{text-align:center;margin:auto;max-width:500px;color:#aaa}
+.welcome h1{font-size:34px;color:#eee;letter-spacing:-1px}
+.welcome p{line-height:1.7}
+.message{max-width:75%;padding:14px 17px;border-radius:16px;line-height:1.6;white-space:pre-wrap}
+.user{align-self:flex-end;background:#332641}
+.bot{align-self:flex-start;background:#1b1a20}
+.composer{padding:15px 22px 22px;border-top:1px solid #252329}
+textarea{width:100%;resize:none;background:#17161b;color:#eee;border:1px solid #36313d;border-radius:15px;padding:15px;min-height:65px;outline:none}
+textarea:focus{border-color:#7651a9}
+.actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.actions span{font-size:12px;color:#777}
+.send{background:#a77be4;color:#170f20;border:0;padding:11px 20px;border-radius:10px;font-weight:700}
+.panel{display:none;padding:25px;overflow:auto}
+.panel h1{font-size:27px}
+.panel p{color:#999}
+.field{display:block;width:100%;max-width:500px;background:#17161b;color:white;border:1px solid #36313d;padding:13px;border-radius:10px;margin:12px 0}
+@media(max-width:650px){
+.sidebar{width:75px;padding:12px 8px;align-items:center}
+.brand{font-size:14px;writing-mode:vertical-rl;margin:10px 0}
+.nav{flex-direction:column;width:100%}
+.nav button{font-size:11px;padding:10px 2px}
+.label,.character small,.profile{display:none}
+.character{padding:8px;text-align:center}
+.avatar{margin:0}
+.add{font-size:10px;padding:8px}
+.top{padding:16px}
+.chat{padding:16px}
+.message{max-width:90%}
+.composer{padding:12px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+<div class="brand">My<span>heaven</span></div>
+<div class="nav">
+<button class="active" onclick="showTab('chat',this)">Chat</button>
+<button onclick="showTab('images',this)">Images</button>
+</div>
+<div class="label">YOUR CHARACTERS</div>
+<div id="characters"></div>
+<button class="add" onclick="newCharacter()">＋ New character</button>
+<div class="profile">Your private little universe ✦</div>
+</aside>
+
+<main class="main">
+<header class="top">
+<h2 id="heading">Myheaven</h2>
+<span class="status">✦ Your playground</span>
+</header>
+
+<section class="chat" id="chat">
+<div class="welcome">
+<h1>Your universe awaits.</h1>
+<p>Create a character, give them a personality, and start a conversation.<br>Your imagination sets the rules.</p>
+</div>
+</section>
+
+<section class="panel" id="images">
+<h1>Image Studio</h1>
+<p>Dream it. Create it. We'll connect image generation shortly.</p>
+<input class="field" placeholder="Describe the image you want to create">
+<button class="send" onclick="alert('Venice image generation will be connected next!')">Generate image</button>
+</section>
+
+<div class="composer" id="composer">
+<textarea id="input" placeholder="Say something..." rows="2"></textarea>
+<div class="actions">
+<span>Myheaven · AI Playground</span>
+<button class="send" onclick="sendMessage()">Send ↗</button>
+</div>
+</div>
+</main>
+</div>
+
+<script>
+let people=JSON.parse(localStorage.getItem('mh_people')||'[]');
+let selected=null;
+let chats=JSON.parse(localStorage.getItem('mh_chats')||'{}');
+
+function save(){
+localStorage.setItem('mh_people',JSON.stringify(people));
+localStorage.setItem('mh_chats',JSON.stringify(chats));
+}
+function renderPeople(){
+let box=document.getElementById('characters');
+box.innerHTML='';
+people.forEach((p,i)=>{
+let el=document.createElement('div');
+el.className='character'+(selected===i?' active':'');
+el.innerHTML='<span class="avatar">'+(p.emoji||'✦')+'</span>'+p.name+'<small>'+p.personality+'</small>';
+el.onclick=()=>selectPerson(i);
+box.appendChild(el);
+});
+}
+function selectPerson(i){
+selected=i;renderPeople();
+document.getElementById('heading').textContent=people[i].name;
+document.getElementById('chat').innerHTML='';
+(chats[i]||[]).forEach(m=>addMessage(m.text,m.role));
+showTab('chat',document.querySelector('.nav button'));
+}
+function newCharacter(){
+let name=prompt('Character name?');
+if(!name)return;
+let personality=prompt('Personality? (e.g. witty, mysterious, romantic)','Witty and mysterious')||'Witty';
+let backstory=prompt('Short backstory?','')||'';
+people.push({name,personality,backstory,emoji:'✦'});
+selected=people.length-1;chats[selected]=[];save();renderPeople();selectPerson(selected);
+}
+function addMessage(text,role){
+let chat=document.getElementById('chat');
+let el=document.createElement('div');
+el.className='message '+(role==='user'?'user':'bot');
+el.textContent=text;
+chat.appendChild(el);chat.scrollTop=chat.scrollHeight;
+}
+function sendMessage(){
+if(selected===null){alert('Create a character first!');return}
+let input=document.getElementById('input');
+let text=input.value.trim();if(!text)return;
+input.value='';
+if(!chats[selected])chats[selected]=[];
+chats[selected].push({text,role:'user'});addMessage(text,'user');save();
+addMessage('Your character will reply once Venice AI is connected. ✦','bot');
+}
+function showTab(tab,button){
+document.getElementById('chat').style.display=tab==='chat'?'flex':'none';
+document.getElementById('composer').style.display=tab==='chat'?'block':'none';
+document.getElementById('images').style.display=tab==='images'?'block':'none';
+document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+if(button)button.classList.add('active');
+}
+document.getElementById('input').addEventListener('keydown',e=>{
+if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}
+});
+renderPeople();
+</script>
+</body>
+</html>
