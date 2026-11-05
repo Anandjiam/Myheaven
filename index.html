@@ -4,169 +4,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Myheaven</title>
+<title>Myheaven — Characters & Stories</title>
 <style>
+:root{--bg:#0c0b10;--panel:#15131b;--line:#292530;--muted:#9b96a5;--purple:#b68cff;--white:#f6f3fa}
 *{box-sizing:border-box}
-body{margin:0;background:#0b0b0e;color:#eee;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif}
 button,input,textarea{font:inherit}
 button{cursor:pointer}
-.app{display:flex;height:100vh;height:100dvh}
-.sidebar{width:260px;background:#111115;border-right:1px solid #26242b;padding:20px;display:flex;flex-direction:column;gap:16px}
-.brand{font-size:24px;font-weight:800;letter-spacing:-1px;margin-bottom:12px}
-.brand span{color:#b58aff}
-.nav{display:flex;gap:8px}
-.nav button{flex:1;background:#1c1a22;color:#aaa;border:0;padding:11px;border-radius:10px}
-.nav button.active{background:#30243f;color:#d8baff}
-.label{font-size:11px;color:#777;letter-spacing:1.5px;margin-top:12px}
-.character{padding:12px;border-radius:12px;background:#1b1920;color:#eee;cursor:pointer;border:1px solid transparent}
-.character.active{border-color:#7651a9;background:#27202f}
-.avatar{display:inline-flex;width:35px;height:35px;border-radius:50%;background:#49345c;align-items:center;justify-content:center;margin-right:10px}
-.character small{display:block;color:#888;margin-left:45px;margin-top:-8px}
-.add{background:transparent;color:#bba1df;border:1px dashed #49404f;padding:12px;border-radius:10px}
-.profile{margin-top:auto;color:#777;font-size:13px}
-.main{flex:1;display:flex;flex-direction:column;min-width:0}
-.top{padding:20px 25px;border-bottom:1px solid #252329;display:flex;align-items:center;justify-content:space-between}
-.top h2{font-size:17px;margin:0}
-.status{color:#9b82bb;font-size:12px}
-.chat{flex:1;overflow:auto;padding:25px;display:flex;flex-direction:column;gap:18px}
-.welcome{text-align:center;margin:auto;max-width:500px;color:#aaa}
-.welcome h1{font-size:34px;color:#eee;letter-spacing:-1px}
-.welcome p{line-height:1.7}
-.message{max-width:75%;padding:14px 17px;border-radius:16px;line-height:1.6;white-space:pre-wrap}
-.user{align-self:flex-end;background:#332641}
-.bot{align-self:flex-start;background:#1b1a20}
-.composer{padding:15px 22px 22px;border-top:1px solid #252329}
-textarea{width:100%;resize:none;background:#17161b;color:#eee;border:1px solid #36313d;border-radius:15px;padding:15px;min-height:65px;outline:none}
-textarea:focus{border-color:#7651a9}
-.actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-.actions span{font-size:12px;color:#777}
-.send{background:#a77be4;color:#170f20;border:0;padding:11px 20px;border-radius:10px;font-weight:700}
-.panel{display:none;padding:25px;overflow:auto}
-.panel h1{font-size:27px}
-.panel p{color:#999}
-.field{display:block;width:100%;max-width:500px;background:#17161b;color:white;border:1px solid #36313d;padding:13px;border-radius:10px;margin:12px 0}
-@media(max-width:650px){
-.sidebar{width:75px;padding:12px 8px;align-items:center}
-.brand{font-size:14px;writing-mode:vertical-rl;margin:10px 0}
-.nav{flex-direction:column;width:100%}
-.nav button{font-size:11px;padding:10px 2px}
-.label,.character small,.profile{display:none}
-.character{padding:8px;text-align:center}
-.avatar{margin:0}
-.add{font-size:10px;padding:8px}
-.top{padding:16px}
-.chat{padding:16px}
-.message{max-width:90%}
-.composer{padding:12px}
+header{height:72px;padding:0 5%;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:#100e15;position:sticky;top:0;z-index:5}
+.logo{font-size:25px;font-weight:800;letter-spacing:-1.2px}
+.logo span{color:var(--purple)}
+nav{display:flex;gap:8px}
+nav button,.pill{border:0;background:transparent;color:var(--muted);padding:11px 17px;border-radius:10px}
+nav button.active{background:#30243f;color:#e3ccff}
+nav button:hover{color:white}
+.create{background:var(--purple);color:#160e21;border:0;border-radius:10px;padding:11px 16px;font-weight:700}
+main{max-width:1180px;margin:auto;padding:38px 25px 70px}
+.eyebrow{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:2px}
+h1{font-size:34px;letter-spacing:-1.2px;margin:10px 0}
+.sub{color:var(--muted);font-size:14px;line-height:1.7}
+.toolbar{display:flex;gap:12px;margin:26px 0;align-items:center;flex-wrap:wrap}
+.search{background:#17151d;border:1px solid var(--line);color:white;border-radius:12px;padding:13px 16px;flex:1;min-width:200px;outline:none}
+.filters{display:flex;gap:7px;flex-wrap:wrap}
+.filters button{background:#191720;border:1px solid var(--line);color:#aaa3b3;border-radius:30px;padding:9px 14px}
+.filters button.active{color:#e5d5ff;background:#30243f;border-color:#70558f}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-4px);border-color:#71558c}
+.cover{width:100%;height:260px;object-fit:cover;display:block;background:linear-gradient(135deg,#41314e,#17151d)}
+.cardbody{padding:15px}
+.cardtop{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.card h3{font-size:17px;margin:0}
+.age{color:#a9a1b2;font-size:12px}
+.role{font-size:12px;color:var(--purple);margin-top:5px}
+.description{font-size:13px;color:#aaa4b1;line-height:1.55;min-height:40px;margin:10px 0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:10px;color:#b9a8ce;background:#282230;padding:5px 8px;border-radius:20px}
+.cardfoot{display:flex;justify-content:space-between;align-items:center;margin-top:15px;padding-top:12px;border-top:1px solid var(--line)}
+.cardfoot span{color:#85808d;font-size:11px}
+.cardfoot button{background:transparent;border:0;color:var(--purple);font-weight:700}
+.sectiontitle{display:flex;justify-content:space-between;align-items:center;margin:30px 0 16px}
+.sectiontitle h2{font-size:20px;margin:0}
+.empty{text-align:center;padding:65px 15px;color:var(--muted)}
+.view{display:none}
+.view.active{display:block}
+.back{background:transparent;border:0;color:var(--purple);padding:0;margin-bottom:25px}
+.profile{display:grid;grid-template-columns:360px 1fr;gap:35px;align-items:start}
+.profile img{width:100%;height:480px;object-fit:cover;border-radius:17px;background:#29202f}
+.profile h1{font-size:38px}
+.profilebox{background:var(--panel);padding:24px;border:1px solid var(--line);border-radius:15px;margin-top:20px}
+.profilebox h3{margin-top:0}
+.primary{background:var(--purple);border:0;color:#160e21;padding:13px 22px;border-radius:10px;font-weight:800}
+.chatbox{max-width:760px;margin:auto;height:calc(100vh - 160px);min-height:450px;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.chathead{padding:17px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.chathead img{width:42px;height:42px;border-radius:50%;object-fit:cover}
+.chatmessages{flex:1;padding:20px;overflow:auto;display:flex;flex-direction:column;gap:13px}
+.bubble{max-width:78%;padding:13px 16px;border-radius:15px;background:#26212e;line-height:1.6;font-size:14px;white-space:pre-wrap}
+.bubble.me{align-self:flex-end;background:#49345f}
+.chatinput{border-top:1px solid var(--line);padding:14px;display:flex;gap:10px}
+.chatinput input{flex:1;min-width:0;background:#201d26;border:1px solid var(--line);color:white;border-radius:11px;padding:13px;outline:none}
+.situation{background:linear-gradient(145deg,#292039,#17141d);border:1px solid var(--line);padding:23px;border-radius:15px;min-height:180px;display:flex;flex-direction:column;justify-content:space-between}
+.situation h3{margin:10px 0}
+.situation p{color:#aaa4b1;font-size:13px;line-height:1.6}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:10;align-items:center;justify-content:center;padding:18px}
+.modal.show{display:flex}
+.modalbox{background:#17141d;border:1px solid var(--line);border-radius:17px;padding:25px;width:100%;max-width:490px;max-height:90vh;overflow:auto}
+.modalbox h2{margin-top:0}
+.field{width:100%;margin:8px 0 15px;padding:12px;border-radius:9px;background:#0f0e13;border:1px solid #38323f;color:white;outline:none}
+label{font-size:12px;color:#aaa}
+.actions{display:flex;gap:10px;justify-content:flex-end}
+.secondary{background:#292530;color:#eee;border:0;padding:12px 17px;border-radius:9px}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.profile{grid-template-columns:1fr}.profile img{height:350px}}
+@media(max-width:520px){
+header{height:62px;padding:0 13px}.logo{font-size:20px}
+nav{gap:0}nav button{padding:9px 10px;font-size:12px}
+header .create{padding:9px 10px;font-size:11px}
+main{padding:27px 14px 50px}h1{font-size:28px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cover{height:190px}.cardbody{padding:11px}
+.card h3{font-size:14px}.description{font-size:11px;min-height:55px}
+.tag{font-size:9px}.cardfoot button{font-size:11px}
 }
 </style>
 </head>
 <body>
-<div class="app">
-<aside class="sidebar">
-<div class="brand">My<span>heaven</span></div>
-<div class="nav">
-<button class="active" onclick="showTab('chat',this)">Chat</button>
-<button onclick="showTab('images',this)">Images</button>
-</div>
-<div class="label">YOUR CHARACTERS</div>
-<div id="characters"></div>
-<button class="add" onclick="newCharacter()">＋ New character</button>
-<div class="profile">Your private little universe ✦</div>
-</aside>
-
-<main class="main">
-<header class="top">
-<h2 id="heading">Myheaven</h2>
-<span class="status">✦ Your playground</span>
+<header>
+  <div class="logo">My<span>heaven</span></div>
+  <nav>
+    <button id="charactersTab" class="active" onclick="showPage('characters')">Characters</button>
+    <button id="situationsTab" onclick="showPage('situations')">Situations</button>
+  </nav>
+  <button class="create" onclick="openCreate()">＋ Create</button>
 </header>
 
-<section class="chat" id="chat">
-<div class="welcome">
-<h1>Your universe awaits.</h1>
-<p>Create a character, give them a personality, and start a conversation.<br>Your imagination sets the rules.</p>
-</div>
-</section>
+<main>
+  <section id="charactersPage" class="view active">
+    <div class="eyebrow">YOUR PRIVATE UNIVERSE</div>
+    <h1>Kisse baat karni hai?</h1>
+    <p class="sub">Meet interesting personalities. Start a story. See where the conversation takes you.</p>
+    <div class="toolbar">
+      <input id="search" class="search" placeholder="Search characters..." oninput="renderCharacters()">
+      <div class="filters">
+        <button class="active" onclick="setFilter('All',this)">All</button>
+        <button onclick="setFilter('Everyday',this)">Everyday</button>
+        <button onclick="setFilter('Romance',this)">Romance</button>
+        <button onclick="setFilter('Fantasy',this)">Fantasy</button>
+        <button onclick="setFilter('My characters',this)">Mine</button>
+      </div>
+    </div>
+    <div class="sectiontitle">
+      <h2>Discover characters</h2>
+      <span class="sub" id="count"></span>
+    </div>
+    <div class="grid" id="characterGrid"></div>
+  </section>
 
-<section class="panel" id="images">
-<h1>Image Studio</h1>
-<p>Dream it. Create it. We'll connect image generation shortly.</p>
-<input class="field" placeholder="Describe the image you want to create">
-<button class="send" onclick="alert('Venice image generation will be connected next!')">Generate image</button>
-</section>
+  <section id="situationsPage" class="view">
+    <div class="eyebrow">CHOOSE YOUR STORY</div>
+    <h1>Every story starts somewhere.</h1>
+    <p class="sub">Pick a situation and step into a new scene.</p>
+    <div class="sectiontitle"><h2>Explore situations</h2></div>
+    <div class="grid" id="situationGrid">
+      <div class="situation"><div><span class="eyebrow">01 · EVERYDAY</span><h3>A chance encounter</h3><p>You keep running into the same person at your favourite café. Today, they finally start a conversation.</p></div><button class="primary" onclick="alert('Situation stories will be connected next.')">Explore scene ↗</button></div>
+      <div class="situation"><div><span class="eyebrow">02 · ROMANCE</span><h3>The late-night message</h3><p>A message arrives at 1 AM from someone you haven't spoken to in months.</p></div><button class="primary" onclick="alert('Situation stories will be connected next.')">Explore scene ↗</button></div>
+      <div class="situation"><div><span class="eyebrow">03 · MYSTERY</span><h3>The unexpected visitor</h3><p>Someone knocks on your door with a story that changes your evening.</p></div><button class="primary" onclick="alert('Situation stories will be connected next.')">Explore scene ↗</button></div>
+    </div>
+  </section>
 
-<div class="composer" id="composer">
-<textarea id="input" placeholder="Say something..." rows="2"></textarea>
-<div class="actions">
-<span>Myheaven · AI Playground</span>
-<button class="send" onclick="sendMessage()">Send ↗</button>
-</div>
-</div>
+  <section id="profilePage" class="view">
+    <button class="back" onclick="showPage('characters')">← Back to characters</button>
+    <div class="profile">
+      <img id="profileImage" alt="Character portrait">
+      <div>
+        <div class="eyebrow">CHARACTER PROFILE</div>
+        <h1 id="profileName"></h1>
+        <div class="sub" id="profileMeta"></div>
+        <p class="sub" id="profileDescription"></p>
+        <div class="profilebox">
+          <h3>About this character</h3>
+          <p class="sub" id="profileStory"></p>
+          <div class="tags" id="profileTags"></div>
+        </div>
+        <br>
+        <button class="primary" onclick="startChat()">💬 Chat karo</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="chatPage" class="view">
+    <button class="back" onclick="showProfile()">← Back to profile</button>
+    <div class="chatbox">
+      <div class="chathead">
+        <img id="chatImage" alt="">
+        <div><strong id="chatName"></strong><div class="sub">✦ Here for a conversation</div></div>
+      </div>
+      <div class="chatmessages" id="messages">
+        <div class="bubble">Hey! It's nice to see you. What's on your mind?</div>
+      </div>
+      <div class="chatinput">
+        <input id="messageInput" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()">
+        <button class="primary" onclick="sendMessage()">Send ↗</button>
+      </div>
+    </div>
+  </section>
 </main>
+
+<div class="modal" id="createModal">
+  <div class="modalbox">
+    <h2>Create your character</h2>
+    <label>Name</label><input class="field" id="newName" placeholder="Give your character a name">
+    <label>Age (18+)</label><input class="field" id="newAge" type="number" min="18" placeholder="Age">
+    <label>Character role</label><input class="field" id="newRole" placeholder="e.g. Artist, neighbour, traveller">
+    <label>Personality</label><input class="field" id="newPersonality" placeholder="e.g. witty, confident, mysterious">
+    <label>About / backstory</label><textarea class="field" id="newStory" rows="4" placeholder="Describe your character and their story"></textarea>
+    <label>Portrait image URL (optional)</label><input class="field" id="newImage" placeholder="Paste an image URL">
+    <div class="actions">
+      <button class="secondary" onclick="closeCreate()">Cancel</button>
+      <button class="primary" onclick="saveCharacter()">Create character</button>
+    </div>
+  </div>
 </div>
 
 <script>
-let people=JSON.parse(localStorage.getItem('mh_people')||'[]');
-let selected=null;
-let chats=JSON.parse(localStorage.getItem('mh_chats')||'{}');
+const stock=[
+{name:"Meera",age:26,role:"The girl next door",type:"Everyday",personality:"calm · warm · thoughtful",description:"A gentle soul you often meet on your evening walks.",story:"Meera teaches at a nearby school. She is observant, warm and has a way of making ordinary evenings feel special.",image:"https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700",tags:["Calm","Warm","Thoughtful"]},
+{name:"Riya",age:24,role:"College friend",type:"Romance",personality:"funny · spontaneous · loyal",description:"An old college friend with a talent for getting you into stories.",story:"You knew Riya from college. After months apart, a random message brings the two of you back into each other's lives.",image:"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700",tags:["Funny","Spontaneous","Loyal"]},
+{name:"Aarav",age:28,role:"The mysterious stranger",type:"Everyday",personality:"quiet · clever · observant",description:"A stranger at the café who seems to know more than he lets on.",story:"Aarav visits the same café every Sunday. One rainy afternoon, he finally takes the seat across from you.",image:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=700",tags:["Quiet","Clever","Mysterious"]},
+{name:"Kiara",age:25,role:"The artist",type:"Romance",personality:"creative · bold · playful",description:"A photographer who sees the world a little differently.",story:"Kiara is a freelance photographer you meet at a small gallery opening. She has a hundred stories and a hundred questions.",image:"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=700",tags:["Creative","Bold","Playful"]},
+{name:"Elena",age:27,role:"Fantasy traveller",type:"Fantasy",personality:"brave · curious · witty",description:"A traveller from a world that exists just beyond yours.",story:"Elena arrives in your city carrying an old map and a secret she has been protecting for years.",image:"https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=700",tags:["Brave","Curious","Fantasy"]},
+{name:"Kabir",age:30,role:"The musician",type:"Everyday",personality:"charming · artistic · thoughtful",description:"A musician who always has one more song to play.",story:"Kabir plays guitar at a neighbourhood bar. You have heard him play several times, but tonight he asks you to stay after the show.",image:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=700",tags:["Music","Charming","Thoughtful"]}
+];
+let custom=JSON.parse(localStorage.getItem('myheaven_characters')||'[]');
+let selected=null,filter='All',currentMessages=[];
 
-function save(){
-localStorage.setItem('mh_people',JSON.stringify(people));
-localStorage.setItem('mh_chats',JSON.stringify(chats));
+function allPeople(){return [...stock,...custom]}
+function safe(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderCharacters(){
+let q=document.getElementById('search').value.toLowerCase();
+let people=allPeople().filter(p=>(filter==='All'||(filter==='My characters'?p.mine:p.type===filter))&&(p.name+' '+p.role+' '+p.description+' '+p.personality).toLowerCase().includes(q));
+document.getElementById('count').textContent=people.length+' characters';
+document.getElementById('characterGrid').innerHTML=people.map((p)=>`
+<div class="card" onclick="openProfile('${safe(p.id||p.name)}')">
+<img class="cover" src="${safe(p.image||'')}" alt="${safe(p.name)}" onerror="this.style.opacity='.15'">
+<div class="cardbody">
+<div class="cardtop"><h3>${safe(p.name)}</h3><span class="age">${safe(p.age)}</span></div>
+<div class="role">${safe(p.role)}</div>
+<div class="description">${safe(p.description)}</div>
+<div class="tags">${(p.tags||[]).slice(0,3).map(t=>'<span class="tag">'+safe(t)+'</span>').join('')}</div>
+<div class="cardfoot"><span>${p.mine?'Your character':'Fictional character'}</span><button>See profile ↗</button></div>
+</div></div>`).join('');
 }
-function renderPeople(){
-let box=document.getElementById('characters');
-box.innerHTML='';
-people.forEach((p,i)=>{
-let el=document.createElement('div');
-el.className='character'+(selected===i?' active':'');
-el.innerHTML='<span class="avatar">'+(p.emoji||'✦')+'</span>'+p.name+'<small>'+p.personality+'</small>';
-el.onclick=()=>selectPerson(i);
-box.appendChild(el);
-});
+function setFilter(value,btn){
+filter=value;document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderCharacters();
 }
-function selectPerson(i){
-selected=i;renderPeople();
-document.getElementById('heading').textContent=people[i].name;
-document.getElementById('chat').innerHTML='';
-(chats[i]||[]).forEach(m=>addMessage(m.text,m.role));
-showTab('chat',document.querySelector('.nav button'));
+function showPage(page){
+document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+document.getElementById(page+'Page').classList.add('active');
+document.getElementById('charactersTab').classList.toggle('active',page==='characters');
+document.getElementById('situationsTab').classList.toggle('active',page==='situations');
 }
-function newCharacter(){
-let name=prompt('Character name?');
-if(!name)return;
-let personality=prompt('Personality? (e.g. witty, mysterious, romantic)','Witty and mysterious')||'Witty';
-let backstory=prompt('Short backstory?','')||'';
-people.push({name,personality,backstory,emoji:'✦'});
-selected=people.length-1;chats[selected]=[];save();renderPeople();selectPerson(selected);
+function getPerson(key){return allPeople().find(p=>p.id===key||p.name===key)}
+function openProfile(key){
+selected=getPerson(key);if(!selected)return;
+document.getElementById('profileImage').src=selected.image||'';
+document.getElementById('profileName').textContent=selected.name;
+document.getElementById('profileMeta').textContent=selected.age+' · '+selected.role;
+document.getElementById('profileDescription').textContent=selected.description;
+document.getElementById('profileStory').textContent=selected.story;
+document.getElementById('profileTags').innerHTML=(selected.tags||[]).map(t=>'<span class="tag">'+safe(t)+'</span>').join('');
+showPage('profile');
 }
-function addMessage(text,role){
-let chat=document.getElementById('chat');
-let el=document.createElement('div');
-el.className='message '+(role==='user'?'user':'bot');
-el.textContent=text;
-chat.appendChild(el);chat.scrollTop=chat.scrollHeight;
+function showProfile(){if(selected)openProfile(selected.id||selected.name)}
+function startChat(){
+if(!selected)return;
+document.getElementById('chatImage').src=selected.image||'';
+document.getElementById('chatName').textContent=selected.name;
+document.getElementById('messages').innerHTML='';
+addBubble(selected.name+': '+(selected.greeting||'Hey! I was hoping I would see you. How has your day been?'),false);
+showPage('chat');
+}
+function addBubble(text,me){
+let b=document.createElement('div');b.className='bubble'+(me?' me':'');b.textContent=text;
+document.getElementById('messages').appendChild(b);
+document.getElementById('messages').scrollTop=999999;
 }
 function sendMessage(){
-if(selected===null){alert('Create a character first!');return}
-let input=document.getElementById('input');
-let text=input.value.trim();if(!text)return;
-input.value='';
-if(!chats[selected])chats[selected]=[];
-chats[selected].push({text,role:'user'});addMessage(text,'user');save();
-addMessage('Your character will reply once Venice AI is connected. ✦','bot');
+let input=document.getElementById('messageInput'),text=input.value.trim();if(!text)return;
+addBubble(text,true);input.value='';
+addBubble('Venice AI will be connected here next. Your character profile is saved. ✦',false);
 }
-function showTab(tab,button){
-document.getElementById('chat').style.display=tab==='chat'?'flex':'none';
-document.getElementById('composer').style.display=tab==='chat'?'block':'none';
-document.getElementById('images').style.display=tab==='images'?'block':'none';
-document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-if(button)button.classList.add('active');
+function openCreate(){document.getElementById('createModal').classList.add('show')}
+function closeCreate(){document.getElementById('createModal').classList.remove('show')}
+function saveCharacter(){
+let name=document.getElementById('newName').value.trim(),age=Number(document.getElementById('newAge').value);
+if(!name||age<18){alert('Please enter a name and an age of 18 or above.');return}
+let role=document.getElementById('newRole').value.trim()||'Your character';
+let personality=document.getElementById('newPersonality').value.trim()||'Unique personality';
+let tags=personality.split(',').map(x=>x.trim()).filter(Boolean);
+let p={id:'custom-'+Date.now(),name,age,role,type:'Everyday',personality,description:role+' · '+personality,story:document.getElementById('newStory').value.trim(),image:document.getElementById('newImage').value.trim()||'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700',tags,mine:true};
+custom.push(p);localStorage.setItem('myheaven_characters',JSON.stringify(custom));
+['newName','newAge','newRole','newPersonality','newStory','newImage'].forEach(id=>document.getElementById(id).value='');
+closeCreate();filter='My characters';document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.textContent==='Mine'));renderCharacters();showPage('characters');
 }
-document.getElementById('input').addEventListener('keydown',e=>{
-if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}
-});
-renderPeople();
+renderCharacters();
 </script>
 </body>
 </html>
