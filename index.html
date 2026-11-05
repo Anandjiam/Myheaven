@@ -1,327 +1,72 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c0b10">
 <title>Myheaven</title>
 <style>
-:root{--bg:#0c0b10;--panel:#15131b;--line:#292530;--muted:#9993a2;--purple:#b68cff}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#f6f3fa;font-family:Inter,Arial,sans-serif}
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-header{height:72px;padding:0 4%;background:#100e15;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:15px;position:sticky;top:0;z-index:5}
-.logo{font-size:25px;font-weight:800;letter-spacing:-1px;white-space:nowrap}
-.logo span{color:var(--purple)}
-nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
-nav button{border:0;background:transparent;color:#aaa;padding:11px 13px;border-radius:10px;font-size:13px}
-nav button.active,nav button:hover{background:#30243f;color:#e5d5ff}
-.create,.primary{background:var(--purple);color:#160e21;border:0;border-radius:10px;padding:12px 16px;font-weight:700}
-main{max-width:1200px;margin:auto;padding:36px 24px 65px}
-.view{display:none}.view.active{display:block}
-.eyebrow{font-size:11px;color:var(--purple);letter-spacing:2px;font-weight:700}
-h1{font-size:34px;letter-spacing:-1px;margin:11px 0}
-.sub{font-size:14px;color:var(--muted);line-height:1.7}
-.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin:25px 0}
-.search,.field{background:#17151d;border:1px solid var(--line);color:white;padding:13px;border-radius:10px;outline:none}
-.search{flex:1;min-width:180px}
-.filters{display:flex;gap:6px;flex-wrap:wrap}
-.filters button{border:1px solid var(--line);background:#191720;color:#aaa;padding:9px 13px;border-radius:25px}
-.filters button.active{background:#30243f;color:#e5d5ff}
-.sectiontitle{display:flex;justify-content:space-between;align-items:center;margin:28px 0 17px}
-.sectiontitle h2{font-size:20px;margin:0}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;cursor:pointer;transition:.2s}
-.card:hover{transform:translateY(-3px);border-color:#7959a0}
-.cover{height:270px;width:100%;object-fit:cover;display:block;background:#29202f}
-.cardbody{padding:15px}
-.cardtop{display:flex;justify-content:space-between;gap:8px}
-.card h3{font-size:17px;margin:0}
-.role{font-size:12px;color:var(--purple);margin-top:6px}
-.description{font-size:13px;color:#aaa4b1;line-height:1.55;min-height:42px;margin:11px 0}
-.tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-size:10px;color:#c7b4df;background:#282230;padding:5px 8px;border-radius:20px}
-.cardfoot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;margin-top:14px}
-.cardfoot span{font-size:11px;color:#85808d}
-.cardfoot button{border:0;background:transparent;color:var(--purple);font-weight:700}
-.back{background:transparent;border:0;color:var(--purple);margin-bottom:22px;padding:0}
-.profile{display:grid;grid-template-columns:360px 1fr;gap:32px}
-.profile img{width:100%;height:480px;object-fit:cover;border-radius:16px;background:#29202f}
-.profilebox{background:var(--panel);border:1px solid var(--line);padding:22px;border-radius:15px;margin:20px 0}
-.profilebox h3{margin-top:0}
-.situation{background:linear-gradient(145deg,#292039,#17141d);border:1px solid var(--line);padding:22px;border-radius:15px;min-height:190px;display:flex;flex-direction:column;justify-content:space-between}
-.situation h3{margin:12px 0}
-.situation p{font-size:13px;color:#aaa;line-height:1.6}
-.chatlayout{display:grid;grid-template-columns:270px 1fr;gap:18px;min-height:610px}
-.chatlist,.chatbox{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden}
-.chatlist{padding:15px}
-.chatlisthead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.chatlisthead h3{font-size:15px}
-.chatitem{padding:12px;border-radius:10px;background:#1d1a23;margin-bottom:7px;cursor:pointer;display:flex;justify-content:space-between;gap:5px;align-items:center}
-.chatitem.active{background:#30243f}
-.chatitem strong{font-size:13px}
-.chatitem small{display:block;color:#999;font-size:11px;margin-top:4px}
-.chatitem button{border:0;background:transparent;color:#bba2dc;padding:5px}
-.chatbox{display:flex;flex-direction:column;min-height:610px}
-.chathead{padding:16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
-.chathead img{width:42px;height:42px;border-radius:50%;object-fit:cover}
-.chathead .sub{font-size:12px}
-.chatmessages{flex:1;padding:20px;overflow:auto;display:flex;flex-direction:column;gap:12px;min-height:300px}
-.bubble{max-width:78%;padding:12px 15px;border-radius:14px;background:#26212e;font-size:14px;line-height:1.6;white-space:pre-wrap}
-.bubble.me{align-self:flex-end;background:#49345f}
-.chatinput{border-top:1px solid var(--line);padding:14px;display:flex;gap:8px}
-.chatinput input{flex:1;min-width:0;background:#201d26;border:1px solid var(--line);color:white;border-radius:10px;padding:13px;outline:none}
-.chattools{padding:9px 14px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end}
-.secondary{background:#292530;color:#eee;border:0;border-radius:8px;padding:9px 12px}
-.empty{text-align:center;padding:60px 15px;color:var(--muted)}
-.modal{display:none;position:fixed;inset:0;background:#000c;z-index:10;align-items:center;justify-content:center;padding:16px}
-.modal.show{display:flex}
-.modalbox{background:#17141d;border:1px solid var(--line);border-radius:16px;padding:24px;width:100%;max-width:490px;max-height:90vh;overflow:auto}
-.modalbox h2{margin-top:0}
-.field{display:block;width:100%;margin:8px 0 15px}
-label{font-size:12px;color:#aaa}
-.actions{display:flex;gap:9px;justify-content:flex-end}
-.imagebox{background:var(--panel);padding:25px;border:1px solid var(--line);border-radius:15px;max-width:650px}
-.imagebox input{width:100%;margin:15px 0}
-.notice{font-size:12px;color:#8d8497;margin-top:15px}
-@media(max-width:800px){
-.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.profile{grid-template-columns:1fr}
-.profile img{height:350px}
-.chatlayout{grid-template-columns:1fr}
-.chatlist{max-height:220px;overflow:auto}
-}
-@media(max-width:520px){
-header{height:auto;min-height:65px;padding:10px;flex-wrap:wrap}
-.logo{font-size:20px}
-nav{order:3;width:100%;justify-content:space-between}
-nav button{padding:9px 8px;font-size:11px}
-.create{padding:9px}
-main{padding:26px 13px}
-h1{font-size:28px}
-.grid{gap:10px}
-.cover{height:190px}
-.cardbody{padding:11px}
-.card h3{font-size:14px}
-.description{font-size:11px;min-height:56px}
-.tag{font-size:9px}
-.profile img{height:300px}
-}
+:root{--bg:#0c0b10;--panel:#15131b;--panel2:#1c1922;--line:#2b2632;--muted:#a49cac;--purple:#bd91f4;--purple2:#8c5fc1;--white:#f7f3fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:wait}
+header{height:70px;padding:0 4%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#100e15;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}.logo{font-size:25px;font-weight:850;letter-spacing:-1.2px;white-space:nowrap}.logo span{color:var(--purple)}nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}nav button{border:0;background:transparent;color:#aaa2b2;border-radius:10px;padding:10px 13px;font-size:13px}nav button.active,nav button:hover{background:#30243f;color:#eadbff}.top-create,.primary{border:0;border-radius:10px;padding:11px 16px;background:var(--purple);color:#1a1024;font-weight:800}.top-create{white-space:nowrap}
+main{max-width:1220px;margin:auto;padding:36px 25px 70px}.view{display:none}.view.active{display:block}.eyebrow{font-size:10px;letter-spacing:2px;font-weight:800;color:var(--purple)}h1{font-size:34px;letter-spacing:-1.2px;margin:10px 0}.sub{font-size:14px;line-height:1.65;color:var(--muted)}.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:25px 0}.search,.field,.composer input,.composer textarea,.chat-input input{background:#191720;color:#f7f3fb;border:1px solid var(--line);border-radius:10px;padding:13px;outline:none}.search{flex:1;min-width:190px}.search:focus,.field:focus,.chat-input input:focus{border-color:#8c65b3}.filters{display:flex;gap:6px;flex-wrap:wrap}.filters button{background:#191720;border:1px solid var(--line);color:#aaa2b2;border-radius:30px;padding:9px 13px;font-size:12px}.filters button.active{background:#30243f;border-color:#76569a;color:#eadbff}.section-title{display:flex;justify-content:space-between;align-items:center;margin:28px 0 16px}.section-title h2{margin:0;font-size:20px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;cursor:pointer;transition:transform .18s,border-color .18s}.card:hover{transform:translateY(-3px);border-color:#76569a}.cover{width:100%;height:270px;display:block;object-fit:cover;object-position:center 34%;background:#282130}.card-body{padding:15px}.card-top{display:flex;justify-content:space-between;gap:8px}.card h3{font-size:17px;margin:0}.city{font-size:11px;color:#aaa2b2}.role{color:var(--purple);font-size:12px;margin-top:6px}.description{font-size:13px;line-height:1.55;color:#aaa4b1;min-height:40px;margin:10px 0}.tags{display:flex;flex-wrap:wrap;gap:6px}.tag{font-size:10px;color:#d0bee5;background:#292330;padding:5px 8px;border-radius:20px}.card-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;margin-top:14px}.card-foot span{font-size:11px;color:#85808d}.card-foot button{border:0;background:transparent;color:var(--purple);font-weight:700;font-size:12px}
+.back{background:transparent;border:0;color:var(--purple);padding:0;margin-bottom:22px}.profile{display:grid;grid-template-columns:minmax(260px,360px) 1fr;gap:32px;align-items:start}.profile-photo{width:100%;height:480px;object-fit:cover;border-radius:16px;background:#29202f}.profile h1{font-size:38px}.profile-box{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:22px;margin:20px 0}.profile-box h3{margin:0 0 10px}.situations{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.situation{display:flex;flex-direction:column;justify-content:space-between;min-height:190px;padding:22px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#292039,#17141d)}.situation h3{margin:12px 0}.situation p{font-size:13px;color:#aaa;line-height:1.6}
+.chat-layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:17px;min-height:620px}.chat-list,.chat-box{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden}.chat-list{padding:14px}.chat-list-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.chat-list-head h3{font-size:15px;margin:0}.chat-item{display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:#1d1a23;margin:7px 0;cursor:pointer}.chat-item.active{background:#30243f}.chat-item img{width:36px;height:42px;object-fit:cover;border-radius:7px}.chat-item .meta{min-width:0;flex:1}.chat-item strong{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat-item small{color:#999;font-size:10px}.chat-item button{border:0;background:transparent;color:#c2a4e8;padding:5px}.chat-box{display:flex;flex-direction:column;min-height:620px}.chat-head{padding:15px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}.chat-head img{width:45px;height:52px;border-radius:9px;object-fit:cover}.chat-head strong{font-size:14px}.chat-head .sub{font-size:11px}.chat-messages{flex:1;min-height:300px;max-height:580px;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:11px}.bubble{max-width:82%;white-space:pre-wrap;overflow-wrap:anywhere;padding:12px 15px;border-radius:14px;background:#26212e;font-size:14px;line-height:1.6}.bubble.me{align-self:flex-end;background:#49345f}.bubble.them{align-self:flex-start}.bubble .who{display:block;font-size:10px;color:#c3a2e8;margin-bottom:4px}.chat-image{max-width:min(100%,440px);border-radius:12px;display:block;margin-top:8px}.chat-input{border-top:1px solid var(--line);padding:13px;display:flex;gap:8px}.chat-input input{min-width:0;flex:1}.chat-actions{border-top:1px solid var(--line);padding:10px 13px;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.secondary{background:#2a2531;color:#eee;border:1px solid #403949;padding:9px 12px;border-radius:9px;font-size:12px}.empty{padding:55px 12px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7}.image-panel{max-width:720px;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:22px}.image-panel label,.modal label{font-size:12px;color:#aaa;display:block}.field{width:100%;display:block;margin:8px 0 15px}.image-preview{display:none;margin-top:20px}.image-preview img{display:block;max-width:100%;max-height:650px;object-fit:contain;border-radius:12px;border:1px solid var(--line)}.image-preview a{display:inline-block;margin-top:12px;color:var(--purple)}.modal{display:none;position:fixed;inset:0;background:#000d;z-index:12;align-items:center;justify-content:center;padding:16px}.modal.show{display:flex}.modal-box{background:#17141d;border:1px solid var(--line);border-radius:16px;padding:24px;width:100%;max-width:490px;max-height:90vh;overflow:auto}.modal-box h2{margin-top:0}.modal-actions{display:flex;gap:9px;justify-content:flex-end}.notice{font-size:11px;color:#817a8b;margin:14px 0}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#2b2433;border:1px solid #514260;color:#eee;border-radius:12px;padding:11px 16px;font-size:13px;z-index:20;display:none;max-width:90vw}.loader{display:inline-block;width:14px;height:14px;border:2px solid #4f3d62;border-top-color:#180f21;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:7px}@keyframes spin{to{transform:rotate(360deg)}}
+#gate{position:fixed;inset:0;background:#0c0b10;z-index:30;display:flex;align-items:center;justify-content:center;padding:20px}#gate .gate-box{width:100%;max-width:390px;background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:28px}#gate .field{width:100%}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.situations{grid-template-columns:1fr 1fr}.profile{grid-template-columns:1fr}.profile-photo{height:390px}.chat-layout{grid-template-columns:1fr}.chat-list{max-height:240px;overflow:auto}}
+@media(max-width:540px){header{height:auto;min-height:64px;padding:10px;flex-wrap:wrap}.logo{font-size:21px}nav{order:3;width:100%;justify-content:space-between}nav button{font-size:11px;padding:8px 9px}.top-create{padding:9px 10px;font-size:12px}main{padding:25px 13px 50px}h1{font-size:28px}.grid{gap:10px}.cover{height:190px}.card-body{padding:10px}.card h3{font-size:14px}.description{font-size:11px;min-height:58px}.tag{font-size:9px}.situations{grid-template-columns:1fr}.profile-photo{height:320px}.bubble{max-width:92%}}
 </style>
 </head>
 <body>
-<header>
-<div class="logo">My<span>heaven</span></div>
-<nav>
-<button id="charactersTab" class="active" onclick="showPage('characters')">Characters</button>
-<button id="situationsTab" onclick="showPage('situations')">Situations</button>
-<button id="chatsTab" onclick="showPage('chats')">Chats</button>
-<button id="imagesTab" onclick="showPage('images')">Images</button>
-</nav>
-<button class="create" onclick="openCreate()">＋ Create</button>
-</header>
-
+<div id="gate"><div class="gate-box"><div class="logo">My<span>heaven</span></div><h2 style="margin:20px 0 6px">Your private space</h2><p class="sub">Enter your Myheaven access code to unlock chat and image generation.</p><input id="accessCode" class="field" type="password" autocomplete="current-password" placeholder="Access code"><button class="primary" id="unlockButton" onclick="unlock()" style="width:100%">Unlock Myheaven</button><p id="gateError" class="notice"></p></div></div>
+<header><div class="logo">My<span>heaven</span></div><nav><button id="charactersTab" class="active" onclick="showPage('characters')">Characters</button><button id="situationsTab" onclick="showPage('situations')">Situations</button><button id="chatsTab" onclick="showPage('chats')">Chats</button><button id="imagesTab" onclick="showPage('images')">Images</button></nav><button class="top-create" onclick="openCreate()">＋ Create</button></header>
 <main>
-<section id="charactersPage" class="view active">
-<div class="eyebrow">YOUR PRIVATE UNIVERSE</div>
-<h1>Meet someone interesting.</h1>
-<p class="sub">Indian women. Different personalities. Stories waiting to happen.</p>
-<div class="toolbar">
-<input id="search" class="search" placeholder="Search characters..." oninput="renderCharacters()">
-<div class="filters">
-<button class="active" onclick="setFilter('All',this)">All</button>
-<button onclick="setFilter('Everyday',this)">Everyday</button>
-<button onclick="setFilter('Romance',this)">Romance</button>
-<button onclick="setFilter('Fantasy',this)">Fantasy</button>
-<button onclick="setFilter('Mine',this)">My characters</button>
-</div>
-</div>
-<div class="sectiontitle"><h2>Discover characters</h2><span class="sub" id="count"></span></div>
-<div class="grid" id="characterGrid"></div>
-</section>
-
-<section id="situationsPage" class="view">
-<div class="eyebrow">CHOOSE YOUR STORY</div>
-<h1>Every story starts somewhere.</h1>
-<p class="sub">Pick a situation and step into a new scene.</p>
-<div class="sectiontitle"><h2>Explore situations</h2></div>
-<div class="grid">
-<div class="situation"><div><span class="eyebrow">DELHI · EVERYDAY</span><h3>A chance encounter</h3><p>You keep running into the same woman at your favourite café. Today, she finally starts a conversation.</p></div><button class="primary" onclick="alert('Choose a character to start this story. Situation prompts will be connected next.')">Explore scene ↗</button></div>
-<div class="situation"><div><span class="eyebrow">MUMBAI · ROMANCE</span><h3>The late-night message</h3><p>A message arrives at 1 AM from someone you haven't spoken to in months.</p></div><button class="primary" onclick="alert('Choose a character to start this story. Situation prompts will be connected next.')">Explore scene ↗</button></div>
-<div class="situation"><div><span class="eyebrow">JAIPUR · MYSTERY</span><h3>The unexpected visitor</h3><p>A traveller arrives at your door with a story that changes your evening.</p></div><button class="primary" onclick="alert('Choose a character to start this story. Situation prompts will be connected next.')">Explore scene ↗</button></div>
-</div>
-</section>
-
-<section id="profilePage" class="view">
-<button class="back" onclick="showPage('characters')">← Back to characters</button>
-<div class="profile">
-<img id="profileImage" alt="Character portrait">
-<div>
-<div class="eyebrow">CHARACTER PROFILE</div>
-<h1 id="profileName"></h1>
-<div class="sub" id="profileMeta"></div>
-<p class="sub" id="profileDescription"></p>
-<div class="profilebox"><h3>About her</h3><p class="sub" id="profileStory"></p><div class="tags" id="profileTags"></div></div>
-<button class="primary" onclick="startChat()">💬 Chat with her</button>
-</div>
-</div>
-</section>
-
-<section id="chatsPage" class="view">
-<div class="eyebrow">YOUR CONVERSATIONS</div>
-<h1>Your chats.</h1>
-<p class="sub">Pick up where you left off, or start a new conversation.</p>
-<div class="chatlayout">
-<aside class="chatlist">
-<div class="chatlisthead"><h3>Recent chats</h3><button class="primary" onclick="showPage('characters')">＋ New</button></div>
-<div id="chatList"></div>
-</aside>
-<div class="chatbox">
-<div class="chathead"><img id="chatImage" alt=""><div><strong id="chatName">Choose a conversation</strong><div class="sub" id="chatSub">Your conversations will appear here</div></div></div>
-<div class="chatmessages" id="messages"><div class="empty">Choose a chat on the left, or start a new one from Characters.</div></div>
-<div class="chatinput"><input id="messageInput" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()"><button class="primary" onclick="sendMessage()">Send ↗</button></div>
-<div class="chattools"><button class="secondary" onclick="renameChat()">Rename chat</button><button class="secondary" onclick="clearChat()">Clear messages</button><button class="secondary" onclick="deleteChat()">Delete chat</button></div>
-</div>
-</div>
-<p class="notice">AI replies will appear here after the Venice API is connected. Your messages are currently saved in this browser.</p>
-</section>
-
-<section id="imagesPage" class="view">
-<div class="eyebrow">IMAGE STUDIO</div>
-<h1>Bring your imagination to life.</h1>
-<div class="imagebox">
-<p class="sub">Describe the image you want to create. Venice image generation will be connected here.</p>
-<textarea class="field" rows="4" id="imagePrompt" placeholder="Describe your scene, character, style and setting..."></textarea>
-<button class="primary" onclick="alert('Image generation will be connected when Venice API is set up.')">Generate image ↗</button>
-</div>
-</section>
+<section id="charactersPage" class="view active"><div class="eyebrow">YOUR PRIVATE UNIVERSE</div><h1>Meet someone interesting.</h1><p class="sub">Six original Indian women. Six distinct looks. Conversations waiting to happen.</p><div class="toolbar"><input id="search" class="search" placeholder="Search characters..." oninput="renderCharacters()"><div class="filters"><button class="active" onclick="setFilter('All',this)">All</button><button onclick="setFilter('Everyday',this)">Everyday</button><button onclick="setFilter('Romance',this)">Romance</button><button onclick="setFilter('Fantasy',this)">Fantasy</button><button onclick="setFilter('Mine',this)">Mine</button></div></div><div class="section-title"><h2>Discover characters</h2><span id="count" class="sub"></span></div><div id="characterGrid" class="grid"></div></section>
+<section id="situationsPage" class="view"><div class="eyebrow">CHOOSE YOUR STORY</div><h1>Every story starts somewhere.</h1><p class="sub">Pick a scene and bring one of the characters into it.</p><div class="section-title"><h2>Explore situations</h2></div><div class="situations"><div class="situation"><div><div class="eyebrow">DELHI · EVERYDAY</div><h3>A chance encounter</h3><p>You keep running into the same woman at your favourite café. Today, she finally starts a conversation.</p></div><button class="primary" onclick="chooseSituation('A chance encounter at a Delhi café on a rainy evening')">Use this scene ↗</button></div><div class="situation"><div><div class="eyebrow">MUMBAI · ROMANCE</div><h3>The late-night message</h3><p>A message arrives at 1 AM from someone you haven't spoken to in months.</p></div><button class="primary" onclick="chooseSituation('A late-night message after months apart')">Use this scene ↗</button></div><div class="situation"><div><div class="eyebrow">JAIPUR · MYSTERY</div><h3>The unexpected visitor</h3><p>A traveller arrives at your door with a story that changes your evening.</p></div><button class="primary" onclick="chooseSituation('An unexpected visitor arrives with a mysterious story')">Use this scene ↗</button></div></div></section>
+<section id="profilePage" class="view"><button class="back" onclick="showPage('characters')">← Back to characters</button><div class="profile"><img id="profileImage" class="profile-photo" alt="Character portrait"><div><div class="eyebrow">CHARACTER PROFILE</div><h1 id="profileName"></h1><div id="profileMeta" class="sub"></div><p id="profileDescription" class="sub"></p><div class="profile-box"><h3>About her</h3><p id="profileStory" class="sub"></p><div id="profileTags" class="tags"></div></div><button class="primary" onclick="startChat()">💬 Chat with her</button></div></div></section>
+<section id="chatsPage" class="view"><div class="eyebrow">YOUR CONVERSATIONS</div><h1>Your chats.</h1><p class="sub">Pick up where you left off, or start a new conversation.</p><div class="chat-layout"><aside class="chat-list"><div class="chat-list-head"><h3>Recent chats</h3><button class="primary" onclick="showPage('characters')">＋ New</button></div><div id="chatList"></div></aside><div class="chat-box"><div class="chat-head"><img id="chatImage" alt=""><div><strong id="chatName">Choose a conversation</strong><div id="chatSub" class="sub">Your conversations will appear here</div></div></div><div id="messages" class="chat-messages"><div class="empty">Choose a chat on the left, or start one from Characters.</div></div><div class="chat-input"><input id="messageInput" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()"><button id="sendButton" class="primary" onclick="sendMessage()">Send ↗</button></div><div class="chat-actions"><button class="secondary" onclick="openImageForCurrentChat()">📸 Create a picture</button><button class="secondary" onclick="renameChat()">Rename</button><button class="secondary" onclick="clearChat()">Clear</button><button class="secondary" onclick="deleteChat()">Delete</button></div></div></div><p class="notice">Conversations are saved in this browser. AI replies use your Venice API balance.</p></section>
+<section id="imagesPage" class="view"><div class="eyebrow">CHARACTER IMAGE STUDIO</div><h1>Put her in a new scene.</h1><p class="sub">Choose a character and describe the picture. Myheaven will use her saved portrait as the visual reference.</p><div class="image-panel"><label for="imageCharacter">Character</label><select class="field" id="imageCharacter"></select><label for="imagePrompt">Scene description</label><textarea id="imagePrompt" class="field" rows="4" placeholder="Example: Simar on a rooftop in Chandigarh at golden hour, wearing a mustard suit, cinematic candid photography..."></textarea><button id="generateButton" class="primary" onclick="generateImage()">Generate picture ↗</button><p class="notice">Image edits use the selected character's portrait as an identity reference. The model may still vary facial details slightly.</p><div id="imagePreview" class="image-preview"></div></div></section>
 </main>
-
-<div class="modal" id="createModal">
-<div class="modalbox">
-<h2>Create an Indian woman character</h2>
-<label>Name</label><input class="field" id="newName" placeholder="Character name">
-<label>Age (18+)</label><input class="field" id="newAge" type="number" min="18" placeholder="Age">
-<label>City in India</label><input class="field" id="newCity" placeholder="e.g. Chandigarh, Mumbai, Delhi">
-<label>Role</label><input class="field" id="newRole" placeholder="e.g. Artist, writer, neighbour">
-<label>Personality</label><input class="field" id="newPersonality" placeholder="e.g. witty, confident, mysterious">
-<label>Backstory</label><textarea class="field" id="newStory" rows="4" placeholder="Describe her personality and story"></textarea>
-<label>Portrait image URL (optional)</label><input class="field" id="newImage" placeholder="Paste an image URL">
-<div class="actions"><button class="secondary" onclick="closeCreate()">Cancel</button><button class="primary" onclick="saveCharacter()">Create character</button></div>
-</div>
-</div>
-
+<div id="createModal" class="modal"><div class="modal-box"><h2>Create a woman character</h2><label>Name</label><input id="newName" class="field" placeholder="Character name"><label>Age (21+)</label><input id="newAge" class="field" type="number" min="21" placeholder="Age"><label>City in India</label><input id="newCity" class="field" placeholder="e.g. Chandigarh, Mumbai, Delhi"><label>Role</label><input id="newRole" class="field" placeholder="e.g. Artist, writer, neighbour"><label>Personality</label><input id="newPersonality" class="field" placeholder="e.g. witty, confident, mysterious"><label>Backstory</label><textarea id="newStory" class="field" rows="4" placeholder="Describe her personality and story"></textarea><label>Portrait image URL (optional; needed for custom-character pictures)</label><input id="newImage" class="field" placeholder="https://..."><div class="modal-actions"><button class="secondary" onclick="closeCreate()">Cancel</button><button class="primary" onclick="saveCharacter()">Create character</button></div></div></div>
+<div id="imageModal" class="modal"><div class="modal-box"><h2>Create her picture</h2><p id="imageModalCharacter" class="sub"></p><label for="chatImagePrompt">Describe the scene</label><textarea id="chatImagePrompt" class="field" rows="4" placeholder="What is she doing? Where is she? What is she wearing?"></textarea><div class="modal-actions"><button class="secondary" onclick="closeImageModal()">Cancel</button><button id="chatGenerateButton" class="primary" onclick="generateImageFromChat()">Generate picture</button></div></div></div>
+<div id="toast" class="toast"></div>
 <script>
-const stock=[
-{id:'aanya',name:'Aanya',age:25,city:'New Delhi',role:'The creative neighbour',type:'Everyday',personality:'witty · warm · observant',description:'An illustrator with a sharp sense of humour and an eye for little details.',story:'Aanya lives in South Delhi and works as a freelance illustrator. She loves old Hindi cinema, rainy evenings and conversations that go on longer than planned.',image:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800',tags:['Creative','Witty','Warm']},
-{id:'meher',name:'Meher',age:24,city:'Amritsar',role:'The musician',type:'Romance',personality:'playful · artistic · independent',description:'A singer-songwriter who turns ordinary moments into stories.',story:'Meher grew up in Amritsar and now performs at intimate music venues. She has a soft spot for old Punjabi songs, poetry and people who can make her laugh.',image:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800',tags:['Music','Poetry','Playful']},
-{id:'kavya',name:'Kavya',age:27,city:'Mumbai',role:'The filmmaker',type:'Everyday',personality:'ambitious · bold · thoughtful',description:'A documentary filmmaker who is always chasing an interesting story.',story:'Kavya works in independent films in Mumbai. She is passionate about cinema, late-night drives and conversations about everything from art to ambition.',image:'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=800',tags:['Cinema','Bold','Ambitious']},
-{id:'naina',name:'Naina',age:26,city:'Kolkata',role:'The journalist',type:'Mystery',personality:'curious · clever · perceptive',description:'A journalist who notices the details other people miss.',story:'Naina writes features for a Kolkata magazine. She collects stories, loves old bookshops and is rarely satisfied with the first answer.',image:'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=800',tags:['Curious','Clever','Books']},
-{id:'isha',name:'Isha',age:25,city:'Bengaluru',role:'The startup founder',type:'Everyday',personality:'smart · sarcastic · driven',description:'A founder balancing big ideas with very little sleep.',story:'Isha is building a small tech startup in Bengaluru. She loves filter coffee, indie music and people who can keep up with her quick wit.',image:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800',tags:['Tech','Sarcastic','Driven']},
-{id:'zoya',name:'Zoya',age:24,city:'Hyderabad',role:'The culinary artist',type:'Romance',personality:'expressive · funny · kind',description:'A food stylist with a love for flavours, films and spontaneous plans.',story:'Zoya is a food stylist in Hyderabad. Her kitchen is always busy, her playlists are eclectic and she believes most problems improve with good biryani.',image:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800',tags:['Food','Funny','Artistic']}
+const builtin=[
+{id:'sonam',name:'Sonam Aunty',age:42,city:'Ludhiana',role:'The neighbour next door',type:'Everyday',personality:'warm, experienced, playful, observant',description:'A confident neighbour who loves long conversations, good chai and a little mischief.',story:'Sonam is a fictional 42-year-old woman living in Ludhiana. She is warm, self-assured, quick-witted and enjoys teasing people she is comfortable with. She has a fuller oval face, short softly waved dark hair with a few silver strands, expressive eyes, a small maroon bindi and gold jhumkas. She usually wears elegant Punjabi suits and embroidered dupattas. She speaks naturally in Indian English and occasional Punjabi.',image:'/portrait-sonam.webp',tags:['Mature','Neighbour','Playful'],greeting:'O ji, there you are. Chai banaun, or have you come with some interesting gossip?'},
+{id:'simar',name:'Simar Gill',age:27,city:'Chandigarh',role:'The Punjabi girl',type:'Romance',personality:'bold, independent, funny, spontaneous',description:'A free-spirited Punjabi woman who says what she thinks and lives on her own terms.',story:'Simar is a fictional 27-year-old woman from Chandigarh. She is lively, confident and a little unpredictable, loves late-night drives, Punjabi music and spontaneous plans. She has a long narrow face, sharp cheekbones, a defined jawline, warm golden-brown skin and very long dark hair usually worn in a thick braid. Her style mixes bright Punjabi suits with contemporary casual clothes. She uses natural Punjabi expressions.',image:'/portrait-simar.webp',tags:['Punjabi','Bold','Spontaneous'],greeting:'Oye! Finally. I was beginning to think you had forgotten how to text.'},
+{id:'rupinder',name:'Rupinder Kaur',age:34,city:'Amritsar',role:'The train companion',type:'Mystery',personality:'thoughtful, composed, curious, quietly intense',description:'A thoughtful traveller with a mysterious past and a taste for deeper conversations.',story:'Rupinder is a fictional 34-year-old woman from Amritsar. She is composed, perceptive and curious about people. She enjoys train journeys, old songs and conversations that unfold slowly. She has a long angular face, deep brown complexion, prominent cheekbones, softly hooded eyes and dark hair mostly tucked beneath a teal embroidered dupatta. Her jewellery is understated gold. She speaks in measured, thoughtful sentences.',image:'/portrait-rupinder.webp',tags:['Traveller','Mysterious','Thoughtful'],greeting:'This journey is getting interesting. Tell me, do you always talk to strangers on trains?'},
+{id:'jassi',name:'Jassi Kaur',age:29,city:'Bengaluru',role:'The fitness coach',type:'Everyday',personality:'disciplined, direct, sarcastic, confident',description:'An athletic fitness coach with a sharp tongue and a surprisingly soft side.',story:'Jassi is a fictional 29-year-old Punjabi woman working as a fitness coach in Bengaluru. She is independent, disciplined, funny and blunt in the best way. She has deep brown skin, a short tousled pixie haircut, a strong jawline, athletic shoulders, expressive brows, small hoop earrings and a geometric tattoo on her upper arm. Her everyday style is modern sportswear and simple streetwear. She likes honest conversations and dislikes unnecessary drama.',image:'/portrait-jassi.webp',tags:['Fit','Confident','Sarcastic'],greeting:'You here to work out, or just distract me from my playlist?'},
+{id:'meher',name:'Meher',age:25,city:'Mumbai',role:'The artist and writer',type:'Romance',personality:'creative, sensitive, romantic, quietly funny',description:'A writer and artist who finds beauty in ordinary moments and late-night conversations.',story:'Meher is a fictional 25-year-old artist and writer from Mumbai. She is imaginative, emotionally perceptive and loves books, poetry, independent cinema and slow evenings in cafés. She has a softly rounded face, light-medium brown complexion, voluminous natural dark curls, round translucent glasses, a delicate nose stud and silver jhumkas. She wears oversized knitwear, handloom fabrics and relaxed creative outfits. She is warm but has a dry sense of humour.',image:'/portrait-meher.webp',tags:['Artist','Books','Romantic'],greeting:'I was writing something and got distracted. Maybe you can be a better distraction.'},
+{id:'zoya',name:'Zoya Khan',age:26,city:'Hyderabad',role:'The free spirit',type:'Fantasy',personality:'outgoing, expressive, adventurous, affectionate',description:'A food lover and traveller who believes the best plans are the ones you never made.',story:'Zoya is a fictional 26-year-old food creator from Hyderabad. She is outgoing, spontaneous and affectionate, loves street food, road trips, live music and discovering new places. She has a round face with pronounced dimples, deep warm-brown skin, a broad joyful smile and shoulder-length dark waves with a side part. She often wears bright printed kurtas, casual dresses and gold hoops. She brings humour and energy into almost every conversation.',image:'/portrait-zoya.webp',tags:['Foodie','Adventurous','Expressive'],greeting:'You picked a good time. I was just planning an unreasonable food adventure.'}
 ];
-let custom=JSON.parse(localStorage.getItem('mh_custom')||'[]');
-let conversations=JSON.parse(localStorage.getItem('mh_conversations')||'[]');
-let selected=null,filter='All';
-
-function save(){localStorage.setItem('mh_custom',JSON.stringify(custom));localStorage.setItem('mh_conversations',JSON.stringify(conversations))}
-function allPeople(){return [...stock,...custom]}
-function person(id){return allPeople().find(p=>p.id===id)}
-function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function showPage(page){
-document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-document.getElementById(page+'Page').classList.add('active');
-['characters','situations','chats','images'].forEach(p=>document.getElementById(p+'Tab').classList.toggle('active',p===page));
-if(page==='chats'){renderChatList();renderMessages()}
-}
-function renderCharacters(){
-let q=document.getElementById('search').value.toLowerCase();
-let people=allPeople().filter(p=>(filter==='All'||(filter==='Mine'?p.mine:p.type===filter))&&(p.name+' '+p.city+' '+p.role+' '+p.description).toLowerCase().includes(q));
-document.getElementById('count').textContent=people.length+' characters';
-document.getElementById('characterGrid').innerHTML=people.map(p=>`
-<div class="card" onclick="openProfile('${esc(p.id)}')">
-<img class="cover" src="${esc(p.image)}" alt="${esc(p.name)}" onerror="this.style.opacity='.15'">
-<div class="cardbody"><div class="cardtop"><h3>${esc(p.name)}</h3><span class="sub">${p.age}</span></div>
-<div class="role">${esc(p.role)} · ${esc(p.city)}</div><div class="description">${esc(p.description)}</div>
-<div class="tags">${(p.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join('')}</div>
-<div class="cardfoot"><span>${p.mine?'Your character':'India · Fictional character'}</span><button>View profile ↗</button></div></div></div>`).join('');
-}
-function setFilter(value,button){filter=value;document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));button.classList.add('active');renderCharacters()}
-function openProfile(id){
-selected=person(id);if(!selected)return;
-document.getElementById('profileImage').src=selected.image||'';
-document.getElementById('profileName').textContent=selected.name;
-document.getElementById('profileMeta').textContent=selected.age+' · '+selected.role+' · '+selected.city+', India';
-document.getElementById('profileDescription').textContent=selected.description;
-document.getElementById('profileStory').textContent=selected.story;
-document.getElementById('profileTags').innerHTML=(selected.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join('');
-showPage('profile');
-}
-function startChat(){
-if(!selected)return;
-let chat={id:'chat-'+Date.now(),characterId:selected.id,title:selected.name,messages:[]};
-conversations.unshift(chat);save();showPage('chats');selectChat(chat.id);
-}
-function currentChat(){return conversations.find(c=>c.id===selectedChatId)}
-let selectedChatId=null;
-function renderChatList(){
-let box=document.getElementById('chatList');
-if(!conversations.length){box.innerHTML='<div class="empty">No chats yet.<br>Open a character and start chatting.</div>';return}
-box.innerHTML=conversations.map(c=>{
-let p=person(c.characterId);
-return `<div class="chatitem ${c.id===selectedChatId?'active':''}" onclick="selectChat('${c.id}')">
-<div><strong>${esc(c.title)}</strong><small>${esc(p?p.city:'India')} · ${(c.messages||[]).length} messages</small></div>
-<button title="Chat actions" onclick="event.stopPropagation();chatActions('${c.id}')">⋯</button></div>`;
-}).join('');
-}
+let custom=JSON.parse(localStorage.getItem('mh_custom')||'[]');let chats=JSON.parse(localStorage.getItem('mh_chats')||'[]');let activeFilter='All',selectedCharacter=null,selectedChatId=null,returnImageToChatId=null;
+function allPeople(){return [...builtin,...custom]}function person(id){return allPeople().find(x=>x.id===id)}function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function save(){localStorage.setItem('mh_custom',JSON.stringify(custom));localStorage.setItem('mh_chats',JSON.stringify(chats))}
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.style.display='block';setTimeout(()=>el.style.display='none',3500)}
+function code(){return sessionStorage.getItem('mh_access_code')||''}
+async function api(path,payload){const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json','x-myheaven-code':code()},body:JSON.stringify(payload)});if(!r.ok){let msg='Request failed ('+r.status+')';try{const d=await r.json();msg=d.error||msg}catch{}throw new Error(msg)}return r}
+async function unlock(){const v=document.getElementById('accessCode').value.trim();if(!v)return;const b=document.getElementById('unlockButton');b.disabled=true;b.textContent='Checking...';try{await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:v})}).then(async r=>{const d=await r.json();if(!r.ok)throw new Error(d.error||'Wrong access code')});sessionStorage.setItem('mh_access_code',v);document.getElementById('gate').style.display='none';document.getElementById('gateError').textContent='';toast('Welcome back.')}catch(e){document.getElementById('gateError').textContent=e.message}finally{b.disabled=false;b.textContent='Unlock Myheaven'}}
+document.getElementById('accessCode').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
+function showPage(p){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(p+'Page').classList.add('active');['characters','situations','chats','images'].forEach(x=>document.getElementById(x+'Tab').classList.toggle('active',x===p));if(p==='chats'){renderChatList();renderMessages()}if(p==='images')fillImageSelect()}
+function renderCharacters(){const q=document.getElementById('search').value.toLowerCase();const list=allPeople().filter(p=>(activeFilter==='All'||(activeFilter==='Mine'?p.mine:p.type===activeFilter))&&(p.name+' '+p.city+' '+p.role+' '+p.description+' '+p.personality).toLowerCase().includes(q));document.getElementById('count').textContent=list.length+' characters';document.getElementById('characterGrid').innerHTML=list.map(p=>`<article class="card" onclick="openProfile('${esc(p.id)}')"><img class="cover" src="${esc(p.image)}" alt="${esc(p.name)}"><div class="card-body"><div class="card-top"><h3>${esc(p.name)}</h3><span class="city">${p.age}</span></div><div class="role">${esc(p.role)} · ${esc(p.city)}</div><div class="description">${esc(p.description)}</div><div class="tags">${(p.tags||[]).slice(0,3).map(t=>'<span class="tag">'+esc(t)+'</span>').join('')}</div><div class="card-foot"><span>${p.mine?'Your character':'Original fictional character'}</span><button>View profile ↗</button></div></div></article>`).join('')||'<div class="empty">No characters found.</div>'}
+function setFilter(f,b){activeFilter=f;document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCharacters()}
+function openProfile(id){selectedCharacter=person(id);if(!selectedCharacter)return;document.getElementById('profileImage').src=selectedCharacter.image;document.getElementById('profileName').textContent=selectedCharacter.name;document.getElementById('profileMeta').textContent=selectedCharacter.age+' · '+selectedCharacter.role+' · '+selectedCharacter.city+', India';document.getElementById('profileDescription').textContent=selectedCharacter.description;document.getElementById('profileStory').textContent=selectedCharacter.story;document.getElementById('profileTags').innerHTML=(selectedCharacter.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join('');showPage('profile')}
+function startChat(scene=''){if(!selectedCharacter)return;const chosenScene=scene||window.pendingScene||'';window.pendingScene='';let c={id:'chat-'+Date.now(),characterId:selectedCharacter.id,title:selectedCharacter.name,messages:[]};if(chosenScene)c.messages.push({role:'user',text:'[Scene: '+chosenScene+']'});chats.unshift(c);selectedChatId=c.id;save();showPage('chats')}
+function chooseSituation(scene){showPage('characters');toast('Choose a character to start this scene.');window.pendingScene=scene}
+function currentChat(){return chats.find(c=>c.id===selectedChatId)}function renderChatList(){const box=document.getElementById('chatList');if(!chats.length){box.innerHTML='<div class="empty">No chats yet.<br>Open a character and start chatting.</div>';return}box.innerHTML=chats.map(c=>{const p=person(c.characterId);return `<div class="chat-item ${c.id===selectedChatId?'active':''}" onclick="selectChat('${esc(c.id)}')"><img src="${esc(p?p.image:'')}" alt=""><div class="meta"><strong>${esc(c.title)}</strong><small>${esc(p?p.city:'Custom character')} · ${(c.messages||[]).length} messages</small></div><button title="Chat options" onclick="event.stopPropagation();chatActions('${esc(c.id)}')">⋯</button></div>`}).join('')}
 function selectChat(id){selectedChatId=id;renderChatList();renderMessages()}
-function renderMessages(){
-let c=currentChat(),p=c&&person(c.characterId);
-document.getElementById('chatName').textContent=c?c.title:'Choose a conversation';
-document.getElementById('chatSub').textContent=p?p.city+', India · Character chat':'Your conversations will appear here';
-document.getElementById('chatImage').src=p?p.image:'';
-let box=document.getElementById('messages');
-if(!c){box.innerHTML='<div class="empty">Choose a chat on the left, or start one from Characters.</div>';return}
-box.innerHTML='';
-if(!c.messages.length){let b=document.createElement('div');b.className='bubble';b.textContent='Start the conversation with '+p.name+'. Venice AI will power her replies once connected.';box.appendChild(b)}
-(c.messages||[]).forEach(m=>{let b=document.createElement('div');b.className='bubble'+(m.role==='user'?' me':'');b.textContent=m.text;box.appendChild(b)});
-box.scrollTop=box.scrollHeight;
-}
-function sendMessage(){
-let c=currentChat(),input=document.getElementById('messageInput'),value=input.value.trim();
-if(!c){alert('Open a character chat first.');return}
-if(!value)return;
-c.messages.push({role:'user',text:value});
-c.messages.push({role:'assistant',text:'Your message is saved. Venice AI will generate her reply after the API is connected.'});
-input.value='';save();renderMessages();renderChatList();
-}
-function chatActions(id){
-let c=conversations.find(x=>x.id===id);if(!c)return;
-let action=prompt('Type: rename, clear, or delete');
-if(!action)return;
-action=action.toLowerCase().trim();
-if(action==='rename'){let title=prompt('New chat name',c.title);if(title)c.title=title}
-else if(action==='clear'){if(confirm('Clear all messages in this chat?'))c.messages=[]}
-else if(action==='delete'){if(confirm('Delete this chat?')){conversations=conversations.filter(x=>x.id!==id);if(selectedChatId===id)selectedChatId=null}}
-save();renderChatList();renderMessages();
-}
-function renameChat(){let c=currentChat();if(!c){alert('Choose a chat first.');return}let t=prompt('Rename conversation',c.title);if(t){c.title=t;save();renderChatList();renderMessages()}}
-function clearChat(){let c=currentChat();if(!c){alert('Choose a chat first.');return}if(confirm('Clear all messages?')){c.messages=[];save();renderMessages();renderChatList()}}
-function deleteChat(){let c=currentChat();if(!c){alert('Choose a chat first.');return}if(confirm('Delete this conversation?')){conversations=conversations.filter(x=>x.id!==c.id);selectedChatId=null;save();renderChatList();renderMessages()}}
-function openCreate(){document.getElementById('createModal').classList.add('show')}
-function closeCreate(){document.getElementById('createModal').classList.remove('show')}
-function saveCharacter(){
-let name=document.getElementById('newName').value.trim();
-let age=Number(document.getElementById('newAge').value);
-let city=document.getElementById('newCity').value.trim();
-if(!name||age<18||!city){alert('Enter a name, age 18 or above, and an Indian city.');return}
-let personality=document.getElementById('newPersonality').value.trim()||'Warm and interesting';
-let tags=personality.split(',').map(x=>x.trim()).filter(Boolean);
-custom.push({id:'custom-'+Date.now(),name,age,city:city+', India',role:document.getElementById('newRole').value.trim()||'Your character',type:'Everyday',personality,description:personality,story:document.getElementById('newStory').value.trim(),image:document.getElementById('newImage').value.trim()||'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=800',tags,mine:true});
-save();closeCreate();['newName','newAge','newCity','newRole','newPersonality','newStory','newImage'].forEach(id=>document.getElementById(id).value='');filter='Mine';document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.textContent==='My characters'));renderCharacters();showPage('characters');
-}
-renderCharacters();renderChatList();
+function renderMessages(){const c=currentChat(),p=c&&person(c.characterId);document.getElementById('chatName').textContent=c?c.title:'Choose a conversation';document.getElementById('chatSub').textContent=p?p.city+' · Private character chat':'Your conversations will appear here';document.getElementById('chatImage').src=p?p.image:'';const box=document.getElementById('messages');if(!c){box.innerHTML='<div class="empty">Choose a chat on the left, or start one from Characters.</div>';return}box.innerHTML='';if(!c.messages.length){const el=document.createElement('div');el.className='bubble them';el.textContent=p?p.greeting:'Start the conversation.';box.appendChild(el)}c.messages.forEach(m=>{const el=document.createElement('div');el.className='bubble '+(m.role==='user'?'me':'them');if(m.role==='assistant'){const who=document.createElement('span');who.className='who';who.textContent=p?p.name:'Myheaven';el.appendChild(who)}el.appendChild(document.createTextNode(m.text));box.appendChild(el)});box.scrollTop=box.scrollHeight}
+async function sendMessage(){const c=currentChat(),input=document.getElementById('messageInput'),text=input.value.trim();if(!c){toast('Open a character chat first.');return}if(!text)return;const p=person(c.characterId);if(!p){toast('Character not found.');return}c.messages.push({role:'user',text});input.value='';save();renderMessages();renderChatList();const b=document.getElementById('sendButton');b.disabled=true;b.innerHTML='<span class="loader"></span>Thinking';try{const r=await api('/api/chat',{character:{id:p.id,name:p.name,age:p.age,city:p.city,role:p.role,personality:p.personality,story:p.story},messages:c.messages.slice(-20).map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.text}))});const d=await r.json();c.messages.push({role:'assistant',text:d.reply||'…'});save();renderMessages();renderChatList()}catch(e){c.messages.push({role:'assistant',text:'I could not reach Venice: '+e.message});save();renderMessages()}finally{b.disabled=false;b.textContent='Send ↗'}}
+function chatActions(id){const c=chats.find(x=>x.id===id);if(!c)return;const a=prompt('Type: rename, clear, or delete');if(!a)return;const v=a.toLowerCase().trim();if(v==='rename'){const n=prompt('New conversation name',c.title);if(n)c.title=n}else if(v==='clear'){if(confirm('Clear this conversation?'))c.messages=[]}else if(v==='delete'){if(confirm('Delete this conversation?')){chats=chats.filter(x=>x.id!==id);if(selectedChatId===id)selectedChatId=null}}save();renderChatList();renderMessages()}
+function renameChat(){const c=currentChat();if(!c)return toast('Choose a chat first.');const n=prompt('Rename conversation',c.title);if(n){c.title=n;save();renderChatList();renderMessages()}}function clearChat(){const c=currentChat();if(!c)return toast('Choose a chat first.');if(confirm('Clear all messages?')){c.messages=[];save();renderMessages();renderChatList()}}function deleteChat(){const c=currentChat();if(!c)return toast('Choose a chat first.');if(confirm('Delete this conversation?')){chats=chats.filter(x=>x.id!==c.id);selectedChatId=null;save();renderChatList();renderMessages()}}
+function openCreate(){document.getElementById('createModal').classList.add('show')}function closeCreate(){document.getElementById('createModal').classList.remove('show')}
+function saveCharacter(){const name=document.getElementById('newName').value.trim(),age=Number(document.getElementById('newAge').value),city=document.getElementById('newCity').value.trim();if(!name||age<21||!city){toast('Enter a name, age 21+, and an Indian city.');return}const image=document.getElementById('newImage').value.trim();if(image&&!image.startsWith('https://')){toast('Portrait URL must start with https://');return}const p={id:'custom-'+Date.now(),name,age,city:city+', India',role:document.getElementById('newRole').value.trim()||'Your character',type:'Everyday',personality:document.getElementById('newPersonality').value.trim()||'Warm and interesting',description:document.getElementById('newPersonality').value.trim()||'A new character in your world.',story:document.getElementById('newStory').value.trim(),image:image||'',tags:(document.getElementById('newPersonality').value||'New').split(',').map(x=>x.trim()),greeting:'Hey, good to see you.' ,mine:true};custom.push(p);save();closeCreate();['newName','newAge','newCity','newRole','newPersonality','newStory','newImage'].forEach(id=>document.getElementById(id).value='');activeFilter='Mine';document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.textContent==='Mine'));renderCharacters();showPage('characters')}
+function fillImageSelect(){const s=document.getElementById('imageCharacter');const old=s.value;s.innerHTML=allPeople().map(p=>`<option value="${esc(p.id)}">${esc(p.name)} — ${esc(p.city)}</option>`).join('');if(old&&person(old))s.value=old;else if(selectedCharacter)s.value=selectedCharacter.id}
+function openImageForCurrentChat(){const c=currentChat();if(!c)return toast('Choose a chat first.');const p=person(c.characterId);if(!p)return;selectedCharacter=p;document.getElementById('imageModalCharacter').textContent='Using '+p.name+'’s saved portrait as the reference.';document.getElementById('imageModal').classList.add('show')}
+function closeImageModal(){document.getElementById('imageModal').classList.remove('show')}
+async function generateImageFromChat(){const c=currentChat(),p=c&&person(c.characterId),scene=document.getElementById('chatImagePrompt').value.trim();if(!p||!scene)return toast('Choose a character and describe the scene.');returnImageToChatId=c.id;closeImageModal();document.getElementById('imageCharacter').value=p.id;document.getElementById('imagePrompt').value=scene;showPage('images');await generateImage()}
+async function generateImage(){const id=document.getElementById('imageCharacter').value,p=person(id),scene=document.getElementById('imagePrompt').value.trim();if(!p||!scene)return toast('Choose a character and describe the scene.');const b=document.getElementById('generateButton');b.disabled=true;b.innerHTML='<span class="loader"></span>Creating her picture';const preview=document.getElementById('imagePreview');preview.style.display='block';preview.innerHTML='<p class="sub">Venice is editing '+esc(p.name)+'’s portrait. This may take a little while…</p>';try{const r=await api('/api/image',{character:{id:p.id,name:p.name,age:p.age,city:p.city,role:p.role,personality:p.personality,story:p.story},prompt:scene,portraitUrl:p.image});const blob=await r.blob(),url=URL.createObjectURL(blob);preview.innerHTML='';const img=document.createElement('img');img.src=url;img.alt=p.name+' in a generated scene';preview.appendChild(img);const a=document.createElement('a');a.href=url;a.download=p.name.toLowerCase()+'-myheaven.webp';a.textContent='Save picture';preview.appendChild(a);if(returnImageToChatId){selectedChatId=returnImageToChatId;showPage('chats');const box=document.getElementById('messages');const bubble=document.createElement('div');bubble.className='bubble them';const who=document.createElement('span');who.className='who';who.textContent=p.name+' · picture';bubble.appendChild(who);const chatImg=document.createElement('img');chatImg.src=url;chatImg.className='chat-image';chatImg.alt=p.name+' generated picture';bubble.appendChild(chatImg);const saveLink=document.createElement('a');saveLink.href=url;saveLink.download=p.name.toLowerCase()+'-myheaven.webp';saveLink.textContent='Save picture';saveLink.style.color='var(--purple)';saveLink.style.display='inline-block';saveLink.style.marginTop='8px';bubble.appendChild(saveLink);box.appendChild(bubble);box.scrollTop=box.scrollHeight;returnImageToChatId=null}toast('Picture ready. Face consistency can vary a little.')}catch(e){preview.innerHTML='<p class="sub">Image generation failed: '+esc(e.message)+'</p>';toast('Image generation failed.')}finally{b.disabled=false;b.textContent='Generate picture ↗'}}
+function chooseSituation(scene){window.pendingScene=scene;showPage('characters');toast('Choose a character, then start her chat with your scene.')}
+renderCharacters();renderChatList();fillImageSelect();if(code()){document.getElementById('gate').style.display='none'}
 </script>
 </body>
 </html>
