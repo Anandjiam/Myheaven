@@ -1,4 +1,4 @@
-const AGENTROUTER = 'https://co.agentrouter.org/v1';
+const AGENTROUTER = 'https://agentrouter.org/v1';
 
 function sendError(res, status, message) {
   return res.status(status).json({ error: message });
